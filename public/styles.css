@@ -1,0 +1,93 @@
+:root {
+    --gradiente1: #393E46;
+    --gradiente2: #222831;
+    --principal: #00ADB5;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--principal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 100vh;
+    margin: 0;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+.movies-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+.movie-card {
+    background: linear-gradient(#393E46, #222831);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    /*margin: 20px*/
+    transition: transform 0.3s;
+}
+.movie-poster {
+    width: 100%;
+    height: auto;
+    display: block;
+
+    /* Propriedade padrão */
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 50%, rgba(0,0,0,1) 65%, rgba(0,0,0,0.6) 85%, rgba(0,0,0,0) 100%);
+
+    /* Variações específicas para navegadores */
+    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.00, rgba(0,0,0,1)), color-stop(0.35, rgba(0,0,0,1)), color-stop(0.50, rgba(0,0,0,1)), color-stop(0.65, rgba(0,0,0,1)), color-stop(0.85, rgba(0,0,0,0.6)), color-stop(1.00, rgba(0,0,0,0)));
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 50%, rgba(0,0,0,1) 65%, rgba(0,0,0,0.6) 85%, rgba(0,0,0,0) 100%);
+    -moz-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 50%, rgba(0,0,0,1) 65%, rgba(0,0,0,0.6) 85%, rgba(0,0,0,0) 100%);
+    -o-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 50%, rgba(0,0,0,1) 65%, rgba(0,0,0,0.6) 85%, rgba(0,0,0,0) 100%);
+    -ms-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 50%, rgba(0,0,0,1) 65%, rgba(0,0,0,0.6) 85%, rgba(0,0,0,0) 100%);
+    position:relative;
+}
+.movie-card:hover {
+    transform: translateY(-10px);
+}
+.movie-details {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Adiciona espaçamento entre os elementos */
+}
+.movie-title {
+    font-size: 1.5em;
+    margin: 0 0 10px 0;
+    color: var(--principal);
+}
+.movie-synopsis {
+    font-size: 0.9em;
+    margin: 0 0 10px 0;
+    color: white;
+}
+.movie-info {
+    font-size: 0.9em;
+    margin: 5px 0;
+    color: white;
+}
+.movie-info strong {
+    color: var(--principal);
+}
+
+.rent-button {
+    background-color: var(--principal);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.rent-button:hover {
+    background-color: #45a049;
+}
