@@ -1,0 +1,24 @@
+@charset "UTF-8";
+/* Importação das fontes uasadas no site */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    outline: none;
+    font-family: 'Poppins';
+}
+
+:root {
+    --gradiente1: #393E46;
+    --gradiente2: #222831;
+    --principal: #00ADB5;
+    --principalHover: #2596be;
+    --white: #fff;
+}
+body {
+    background-color: var(--principal);
+    font-family: 'Poppins';
+}

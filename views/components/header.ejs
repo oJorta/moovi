@@ -1,0 +1,65 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/global.css"> <!-- Inclui o CSS global -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome -->
+</head>
+
+<header class="Header">
+    <nav>
+        <!-- Construção da logo do site -->
+        <a href = "#">
+            <span class = "logoLeft">Odeio</span><span class = "logoRight"> Cinema</span>
+        </a>
+        <!-- Construção do menu mobile -->
+        <div class = "mobile-menu">
+            <div class = "line1"></div>
+            <div class = "line2"></div>
+            <div class = "line3"></div>
+        </div>
+        <!-- Construção dos links de navegação -->
+        <ul class = "nav-links">
+            <li><a href = "#" class = "links" style = "color: var(--principal);">Home</a></li>
+            <li><a href = "#" class = "links">Search</a></li>
+            <li><a href = "#" class = "links">My movies</a></li>
+            <li><a href = "#" class = "links">Contact Us</a></li>
+            <li><a href = "#" class = "profile"><i class="fa-solid fa-user"></i></a></li>
+        </ul>
+    </nav>
+</header>
+
+<script>
+    class MobileNavbar { // Classe que faz a animação da ativação do menu mobile
+        constructor(mobileMenu, navList, navLinks) {
+            this.mobileMenu = document.querySelector(mobileMenu);
+            this.navList = document.querySelector(navList);
+            this.navLinks = document.querySelectorAll(navLinks);
+            this.activeClass = "active";
+            this.handleClick = this.handleClick.bind(this);
+        }
+        animateLinks() {
+            this.navLinks.forEach((link, index) => {
+                link.style.animation ? (link.style.animation = "") : (link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`);
+            });
+        }
+        handleClick() {
+            this.navList.classList.toggle(this.activeClass);
+            this.mobileMenu.classList.toggle(this.activeClass);
+            this.animateLinks();
+        }
+        addClickEvent() {
+            this.mobileMenu.addEventListener("click", this.handleClick);
+        }
+        init() {
+            if (this.mobileMenu) {
+                this.addClickEvent();
+            }
+            return this;
+        }
+    }
+    // Faz a chamada da classe de animação do mobile menu com as classes definidas no HTML
+    const mobileNavbar = new MobileNavbar(".mobile-menu", ".nav-links", ".nav-links li",);
+    mobileNavbar.init();
+</script>
