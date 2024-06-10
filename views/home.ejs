@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="/styles/global.css"> <!-- Inclui o CSS global -->
     <title>Odeio Cinema</title>
 </head>
+
 <body>
     <%- include('components/header') %> <!-- Inclui o header.ejs -->
     <div id="movies-container" class="movies-container"></div>
@@ -28,6 +30,7 @@
                         <p class="movie-info"><strong>Ano de Lançamento:</strong> ${new Date(movie.DataLancamento).getFullYear()}</p>
                         <p class="movie-info"><strong>Diretor:</strong> ${movie.Diretor}</p>
                         <p class="movie-info"><strong>Produtora:</strong> ${movie.Produtora}</p>
+                        <p class="movie-info"><strong>Nota:</strong> ${movie.nota}</p>
                         <button class="rent-button">Alugar</button>
                     </div>
                 `;
@@ -42,4 +45,5 @@
         renderMovies(movies);
     </script>
 </body>
+
 </html>

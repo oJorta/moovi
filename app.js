@@ -20,7 +20,7 @@ const db = new sqlite3.Database('./Data.db', (err) => {
 
 app.use(express.urlencoded({ extended: false }));
 
-// Rota para renderizar os dados
+// Rota para renderizar a página inicial com os dados do banco de dados
 app.get("/", (req, res) => {
   const sql = "SELECT * FROM Filme";
   db.all(sql, [], (err, rows) => {
@@ -31,6 +31,11 @@ app.get("/", (req, res) => {
       res.render("home", { dados: rows });
     }
   });
+});
+
+// Rota para renderizar a página de login
+app.get("/login", (req, res) => {
+  res.render("login");
 });
 
 // Iniciar o servidor

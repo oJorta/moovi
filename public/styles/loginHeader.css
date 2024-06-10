@@ -1,0 +1,20 @@
+nav {
+    display: flex; /* Mantém  a tag em uma única linha */
+    align-items: center; /* Posiciona tudo ao centro da tela */
+    justify-content: center;
+    flex-wrap: wrap; /* Reposiciona os itens da nav bar em diferentes linhas em tamanhos de telas menores */
+    height: 10vh; /* Altura da nav bar */
+    background: linear-gradient(var(--gradiente2), var(--gradiente1)); /* Gradiente do Background */
+}
+.logoLeft {
+    color: var(--principal); /* Cor */
+    font-weight: 600; /* Grossura */
+    font-size: 20px; /* Tamanho da fonte */
+    line-height: 1.5; /* Altura da linha */
+}
+.logoRight {
+    color: var(--white); /* Cor */
+    font-weight: 400; /* Grossura */
+    font-size: 24px; /* Tamanho da fonte */
+    line-height: 1.5; /* Altura da linha */
+}
