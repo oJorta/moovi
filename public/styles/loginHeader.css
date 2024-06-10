@@ -9,12 +9,12 @@ nav {
 .logoLeft {
     color: var(--principal); /* Cor */
     font-weight: 600; /* Grossura */
-    font-size: 20px; /* Tamanho da fonte */
+    font-size: 24px; /* Tamanho da fonte */
     line-height: 1.5; /* Altura da linha */
 }
 .logoRight {
     color: var(--white); /* Cor */
     font-weight: 400; /* Grossura */
-    font-size: 24px; /* Tamanho da fonte */
+    font-size: 28px; /* Tamanho da fonte */
     line-height: 1.5; /* Altura da linha */
 }
