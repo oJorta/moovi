@@ -38,6 +38,11 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
+// Rota para renderizar a página de pesquisa
+app.get("/search", (req, res) => {
+  res.render("search");
+});
+
 // Iniciar o servidor
 app.listen(port, () => {
   console.log("Servidor rodando na porta " + port + ". Acesse: http://localhost:" + port);

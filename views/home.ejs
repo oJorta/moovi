@@ -5,45 +5,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/home.css">
+    <link rel="stylesheet" href="/styles/movieCard.css">
+    <link rel="stylesheet" href="/styles/search.css">
     <link rel="stylesheet" href="/styles/global.css"> <!-- Inclui o CSS global -->
     <title>Odeio Cinema</title>
 </head>
 
 <body>
     <%- include('components/header') %> <!-- Inclui o header.ejs -->
-    <div id="movies-container" class="movies-container"></div>
-    <script>
-        // Função para renderizar filmes
-        function renderMovies(movies) {
-            const moviesContainer = document.getElementById('movies-container');
-            movies.forEach(movie => {
-                const movieCard = document.createElement('div');
-                movieCard.className = 'movie-card';
-                movieCard.innerHTML = `
-                    <img src="../Posters/${movie.Poster}" alt="Poster do Filme" class="movie-poster">
-                    <div class="movie-details">
-                        <h2 class="movie-title">${movie.Nome}</h2>
-                        <p class="movie-synopsis">${movie.Sinopse}</p>
-                        <p class="movie-info"><strong>Duração:</strong> ${movie.Duracao} min</p>
-                        <p class="movie-info"><strong>Gênero:</strong> ${movie.FK_Genero}</p>
-                        <p class="movie-info"><strong>Ano de Lançamento:</strong> ${new Date(movie.DataLancamento).getFullYear()}</p>
-                        <p class="movie-info"><strong>Diretor:</strong> ${movie.Diretor}</p>
-                        <p class="movie-info"><strong>Produtora:</strong> ${movie.Produtora}</p>
-                        <p class="movie-info"><strong>Nota:</strong> ${movie.nota}</p>
-                        <button class="rent-button">Alugar</button>
-                    </div>
-                `;
-                moviesContainer.appendChild(movieCard);
-            });
-        }
-
-        // Dados dos filmes fornecidos pelo EJS
-        const movies = <%- JSON.stringify(dados) %>;
-
-        // Chamar a função para renderizar os filmes
-        renderMovies(movies);
-    </script>
+    <main class="main">
+        <div id="movies-container" class="movies-container"></div>
+        <script>
+            // Função para renderizar filmes
+            function renderMovies(movies) {
+                const moviesContainer = document.getElementById('movies-container');
+                movies.forEach(movie => {
+                    const movieCard = document.createElement('div');
+                    movieCard.className = 'movie-card';
+                    movieCard.innerHTML = `
+                        <img src="../Posters/${movie.Poster}" alt="Poster do Filme" class="movie-poster">
+                        <div class="movie-details">
+                            <h2 class="movie-title">${movie.Nome}</h2>
+                            <p class="movie-synopsis">${movie.Sinopse}</p>
+                            <p class="movie-info"><strong>Duração:</strong> ${movie.Duracao} min</p>
+                            <p class="movie-info"><strong>Gênero:</strong> ${movie.FK_Genero}</p>
+                            <p class="movie-info"><strong>Ano de Lançamento:</strong> ${new Date(movie.DataLancamento).getFullYear()}</p>
+                            <p class="movie-info"><strong>Diretor:</strong> ${movie.Diretor}</p>
+                            <p class="movie-info"><strong>Produtora:</strong> ${movie.Produtora}</p>
+                            <p class="movie-info"><strong>Nota:</strong> ${movie.nota}</p>
+                            <button class="rent-button">Alugar</button>
+                        </div>
+                    `;
+                    moviesContainer.appendChild(movieCard);
+                });
+            }
+            // Dados dos filmes fornecidos pelo EJS
+            const movies = <%- JSON.stringify(dados) %>;
+            // Chamar a função para renderizar os filmes
+            renderMovies(movies);
+        </script>
+    </main>
 </body>
 
 </html>
