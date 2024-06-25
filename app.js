@@ -43,6 +43,19 @@ app.get("/search", (req, res) => {
   res.render("search");
 });
 
+// Rota para renderizar a página de admin
+app.get("/admin", (req, res) => {
+  const sql = "SELECT * FROM Filme";
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      console.error("Erro ao executar a consulta:", err.message);
+      res.status(500).send("Erro ao executar a consulta");
+    } else {
+      res.render("admin", { dados: rows });
+    }
+  });
+});
+
 // Iniciar o servidor
 app.listen(port, () => {
   console.log("Servidor rodando na porta " + port + ". Acesse: http://localhost:" + port);

@@ -1,0 +1,42 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--white);
+}
+
+th {
+    background: linear-gradient(var(--gradiente1), var(--gradiente2));
+    color: var(--white);
+}
+
+tr:hover {
+    background-color: var(--white);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-button, .delete-button {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.edit-button {
+    background-color: var(--edit);
+    color: var(--white);
+}
+
+.delete-button {
+    background-color: var(--delete);
+    color: var(--white);
+}

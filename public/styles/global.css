@@ -18,6 +18,8 @@
     --principalHover: #2596be;
     --white: #fff;
     --black: #000;
+    --edit: #4CAF50;
+    --delete: #f44336;
 }
 
 body {

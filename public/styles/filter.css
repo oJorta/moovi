@@ -16,12 +16,12 @@
 .searchIcon {
     height: 1em;
     padding: 0 0.5em 0 0.8em;
-    fill: var(--principal);
+    fill: var(--white);
 }
 
 .inputBox {
     background-color: transparent;
-    color: var(--principal);
+    color: var(--white);
     outline: none;
     width: 100%;
     border: 0;
@@ -30,7 +30,7 @@
 }
 
 ::placeholder {
-    color: var(--principal);
+    color: var(--white);
 }
 
 .filterContainer {
@@ -47,7 +47,7 @@
 }
 
 .labelInput {
-    color: var(--principal);
+    color: var(--white);
 }
 
 .filterItem {
