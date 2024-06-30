@@ -37,7 +37,16 @@
                     `;
                     moviesContainer.appendChild(movieCard);
                 });
+
+                // Adiciona o evento de clique para todos os botões de alugar
+                document.querySelectorAll('.rent-button').forEach(button => {
+                    button.addEventListener('click', function() {
+                        this.textContent = 'Assistir';
+                        this.className = 'watch-button';
+                    });
+                });
             }
+            
             // Dados dos filmes fornecidos pelo EJS
             const movies = <%- JSON.stringify(dados) %>;
             // Chamar a função para renderizar os filmes
