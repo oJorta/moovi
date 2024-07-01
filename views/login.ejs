@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +8,6 @@
     <link rel="stylesheet" href="/styles/global.css"> <!-- Inclui o CSS global -->
     <title>Odeio Cinema</title>
 </head>
-
 <body>
     <%- include('components/loginHeader') %> <!-- Inclui o header.ejs -->
     <div class="form">
@@ -20,95 +18,88 @@
         <div class="tab-content">
             <div id="signup">
                 <h1>Faça seu cadastro!</h1>
-                <form action="/" method="post">
+                <form action="/cadastro" method="post">
                     <div class="field-wrap">
                         <label>Nome<span class="req">*</span></label>
-                        <input type="text" required autocomplete="off" />
+                        <input type="text" name="nome" required autocomplete="off" />
                     </div>
                     <div class="selectCountry">
-                        <!-- <label>País<span class="req">*</span></label> -->
-                        <select id="country" required>
+                        <select id="country" name="pais" required>
                             <option value="">Selecione um país</option>
-                            <option value="brasil">Brasil</option>
-                            <option value="eua">Estados Unidos</option>
-                            <option value="canada">Canadá</option>
-                            <option value="franca">França</option>
-                            <option value="japao">Japão</option>
-                            <option value="espanha">Espanha</option>
-                            <option value="portugal">Portugal</option>
-                            <!-- Adicione outros países conforme necessário -->
+                            <option value="1">Brasil</option>
+                            <option value="2">Estados Unidos</option>
+                            <option value="3">Canadá</option>
+                            <option value="4">França</option>
+                            <option value="5">Japão</option>
+                            <option value="6">Espanha</option>
+                            <option value="7">Portugal</option>
                         </select>
                     </div>
                     <div class="selectCountry hidden" id="state-wrap">
-                        <!-- <label>Estado<span class="req">*</span></label> -->
-                        <select id="state">
+                        <select id="state" name="estado">
                             <option value="">Selecione um estado</option>
-                            <option value="ac">Acre</option>
-                            <option value="al">Alagoas</option>
-                            <option value="ap">Amapá</option>
-                            <option value="am">Amazonas</option>
-                            <option value="ba">Bahia</option>
-                            <option value="ce">Ceará</option>
-                            <option value="df">Distrito Federal</option>
-                            <option value="es">Espírito Santo</option>
-                            <option value="go">Goiás</option>
-                            <option value="ma">Maranhão</option>
-                            <option value="mt">Mato Grosso</option>
-                            <option value="ms">Mato Grosso do Sul</option>
-                            <option value="mg">Minas Gerais</option>
-                            <option value="pa">Pará</option>
-                            <option value="pb">Paraíba</option>
-                            <option value="pr">Paraná</option>
-                            <option value="pe">Pernambuco</option>
-                            <option value="pi">Piauí</option>
-                            <option value="rj">Rio de Janeiro</option>
-                            <option value="rn">Rio Grande do Norte</option>
-                            <option value="rs">Rio Grande do Sul</option>
-                            <option value="ro">Rondônia</option>
-                            <option value="rr">Roraima</option>
-                            <option value="sc">Santa Catarina</option>
-                            <option value="sp">São Paulo</option>
-                            <option value="se">Sergipe</option>
-                            <option value="to">Tocantins</option>
+                            <option value="1">Acre</option>
+                            <option value="2">Alagoas</option>
+                            <option value="3">Amapá</option>
+                            <option value="4">Amazonas</option>
+                            <option value="5">Bahia</option>
+                            <option value="6">Ceará</option>
+                            <option value="7">Distrito Federal</option>
+                            <option value="8">Espírito Santo</option>
+                            <option value="9">Goiás</option>
+                            <option value="10">Maranhão</option>
+                            <option value="11">Mato Grosso</option>
+                            <option value="12">Mato Grosso do Sul</option>
+                            <option value="13">Minas Gerais</option>
+                            <option value="14">Pará</option>
+                            <option value="15">Paraíba</option>
+                            <option value="16">Paraná</option>
+                            <option value="17">Pernambuco</option>
+                            <option value="18">Piauí</option>
+                            <option value="19">Rio de Janeiro</option>
+                            <option value="20">Rio Grande do Norte</option>
+                            <option value="21">Rio Grande do Sul</option>
+                            <option value="22">Rondônia</option>
+                            <option value="23">Roraima</option>
+                            <option value="24">Santa Catarina</option>
+                            <option value="25">São Paulo</option>
+                            <option value="26">Sergipe</option>
+                            <option value="27">Tocantins</option>
                         </select>
                     </div>
                     <div class="field-wrap hidden" id="address-wrap">
                         <label>Logradouro<span class="req">*</span></label>
-                        <input type="text" id="address" autocomplete="off"/>
+                        <input type="text" name="logradouro" id="address" autocomplete="off"/>
                     </div>
                     <div class="field-wrap hidden" id="cep-wrap">
                         <label>CEP<span class="req">*</span></label>
-                        <input type="text" id="cep" autocomplete="off"/>
+                        <input type="text" name="cep" id="cep" autocomplete="off"/>
                     </div>
                     <div class="field-wrap">
                         <label>Telefone<span class="req">*</span></label>
-                        <input type="tel" required autocomplete="off"/>
+                        <input type="tel" name="telefone" required autocomplete="off"/>
                     </div>
                     <div class="field-wrap">
                         <label>Email<span class="req">*</span></label>
-                        <input type="email" required autocomplete="off"/>
+                        <input type="email" name="email" required autocomplete="off"/>
                     </div>
                     <div class="field-wrap">
                         <label>Senha<span class="req">*</span></label>
-                        <input type="password" required autocomplete="off"/>
+                        <input type="password" name="password" required autocomplete="off"/>
                     </div>
                     <button type="submit" class="button button-block">Seja bem vindo!</button>
                 </form>
             </div>
             <div id="login">   
                 <h1>Bem vindo de volta!</h1>
-                <form action="/" method="post">
+                <form action="/login" method="post">
                     <div class="field-wrap">
-                        <label>
-                            Email<span class="req">*</span>
-                        </label>
-                        <input type="email"required autocomplete="off"/>
+                        <label>Email<span class="req">*</span></label>
+                        <input type="email" name="email" required autocomplete="off"/>
                     </div>
                     <div class="field-wrap">
-                        <label>
-                            Senha<span class="req">*</span>
-                        </label>
-                        <input type="password"required autocomplete="off"/>
+                        <label>Senha<span class="req">*</span></label>
+                        <input type="password" name="password" required autocomplete="off"/>
                     </div>
                     <p class="forgot"><a href="#">Esqueceu a senha?</a></p>
                     <button class="button button-block">Login</button>
@@ -116,11 +107,9 @@
             </div>
         </div>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Primeira função: Gerenciamento de foco e classes
             $('.form').find('input, textarea').on('keyup blur focus', function (e) {
                 var $this = $(this), label = $this.prev('label');
                 if (e.type === 'keyup') {
@@ -144,7 +133,6 @@
                 }
             });
 
-            // Segunda função: Aba de navegação
             $('.tab a').on('click', function (e) {
                 e.preventDefault();
                 $(this).parent().addClass('active');
@@ -154,12 +142,11 @@
                 $(target).fadeIn(600);
             });
 
-            // Terceira função: Mostrar e esconder estados baseado na seleção de país
             $('#country').on('change', function() {
                 var stateWrap = $('#state-wrap');
                 var addressWrap = $('#address-wrap');
                 var cepWrap = $('#cep-wrap');
-                var isBrazil = $(this).val() === 'brasil';
+                var isBrazil = $(this).val() === '1'; // Verificar se o país é Brasil
                 
                 if (isBrazil) {
                     stateWrap.removeClass('hidden');
@@ -180,5 +167,4 @@
         });
     </script>
 </body>
-
 </html>
