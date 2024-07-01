@@ -1,13 +1,14 @@
 table {
-    width: 100%;
+    max-width: 90%;
     border-collapse: collapse;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 th, td {
     padding: 12px;
     text-align: left;
-    border-bottom: 1px solid var(--white);
+    /* border-bottom: 1px solid var(--white); */
 }
 
 th {
@@ -17,6 +18,10 @@ th {
 
 tr:hover {
     background-color: var(--white);
+}
+
+tbody {
+    background-color: var(--text);
 }
 
 .action-buttons {

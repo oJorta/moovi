@@ -11,69 +11,73 @@
 
 <body>
     <%- include('components/loginHeader') %> <!-- Inclui o header.ejs -->
-    <table>
-        <thead>
-            <tr>
-                <th>Título</th>
-                <th>Sinopse</th>
-                <th>Gênero</th>
-                <th>Ano de Lançamento</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody id="movies-table-body">
-            <!-- As linhas da tabela serão geradas pela função renderMoviesTable -->
-        </tbody>
-    </table>
+    <main class="main">
+        <table>
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Sinopse</th>
+                    <th>Gênero</th>
+                    <th>Ano de Lançamento</th>
+                    <th>Contador</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="movies-table-body">
+                <!-- As linhas da tabela serão geradas pela função renderMoviesTable -->
+            </tbody>
+        </table>
 
-    <script>
-        // Função para renderizar a tabela de filmes
-        function renderMoviesTable(movies) {
-            const moviesTableBody = document.getElementById('movies-table-body');
-            movies.forEach(movie => {
-                const movieRow = document.createElement('tr');
-                movieRow.innerHTML = `
-                    <td>${movie.Nome}</td>
-                    <td>${movie.Sinopse}</td>
-                    <td>${movie.FK_Genero}</td>
-                    <td>${new Date(movie.DataLancamento).getFullYear()}</td>
-                    <td class="action-buttons">
-                        <button class="edit-button" onclick="editMovie('${movie.id}')">Edit</button>
-                        <button class="delete-button" onclick="deleteMovie('${movie.id}')">Delete</button>
-                    </td>
-                `;
-                moviesTableBody.appendChild(movieRow);
-            });
-        }
-
-        // Dados dos filmes fornecidos pelo EJS
-        const movies = <%- JSON.stringify(dados) %>;
-
-        // Chamar a função para renderizar a tabela de filmes
-        renderMoviesTable(movies);
-
-        // Função para editar um filme
-        function editMovie(id) {
-            // Redireciona para a página de edição com o ID do filme
-            window.location.href = `/edit/${id}`;
-        }
-
-        // Função para excluir um filme
-        function deleteMovie(id) {
-            if (confirm('Are you sure you want to delete this movie?')) {
-                fetch(`/delete/${id}`, {
-                    method: 'DELETE',
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.reload();
-                    } else {
-                        alert('Error deleting movie');
-                    }
+        <script>
+            // Função para renderizar a tabela de filmes
+            function renderMoviesTable(movies) {
+                const moviesTableBody = document.getElementById('movies-table-body');
+                movies.forEach(movie => {
+                    const movieRow = document.createElement('tr');
+                    movieRow.innerHTML = `
+                        <td>${movie.Nome}</td>
+                        <td>${movie.Sinopse}</td>
+                        <td>${movie.FK_Genero}</td>
+                        <td>${new Date(movie.DataLancamento).getFullYear()}</td>
+                        <td>${movie.contador}</td>
+                        <td class="action-buttons">
+                            <button class="edit-button" onclick="editMovie('${movie.id}')">Edit</button>
+                            <button class="delete-button" onclick="deleteMovie('${movie.id}')">Delete</button>
+                        </td>
+                    `;
+                    moviesTableBody.appendChild(movieRow);
                 });
             }
-        }
-    </script>
+        
+            // Dados dos filmes fornecidos pelo EJS
+            const movies = <%- JSON.stringify(dados) %>;
+        
+            // Chamar a função para renderizar a tabela de filmes
+            renderMoviesTable(movies);
+        
+            // Função para editar um filme
+            function editMovie(id) {
+                // Redireciona para a página de edição com o ID do filme
+                window.location.href = `/edit/${id}`;
+            }
+        
+            // Função para excluir um filme
+            function deleteMovie(id) {
+                if (confirm('Are you sure you want to delete this movie?')) {
+                    fetch(`/delete/${id}`, {
+                        method: 'DELETE',
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.reload();
+                        } else {
+                            alert('Error deleting movie');
+                        }
+                    });
+                }
+            }
+        </script>
+    </main>
 </body>
 </html>
