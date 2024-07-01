@@ -72,7 +72,7 @@
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 20px;
     margin-top: auto; /* Empurra o botão para a parte inferior */
     cursor: pointer;
     border-radius: 5px;
@@ -84,14 +84,14 @@
 }
 
 .watch-button {
-    background-color: var(--gradiente1);
-    border: 3px solid var(--principal);
-    color: white;
+    background-color: linear-gradient(var(--gradiente1), var(--gradiente2));
+    border: 2px solid var(--principal);
+    color: var(--text);
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 20px;
     margin-top: auto;
     cursor: pointer;
     border-radius: 5px;
@@ -99,6 +99,6 @@
 }
 
 .watch-button:hover {
-    background-color: var(--gradiente2);
-    border: 3px solid var(--principalHover);
+    background-color: linear-gradient(var(--gradiente1), var(--gradiente2));
+    border: 2px solid var(--principalHover);
 }
