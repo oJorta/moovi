@@ -7,7 +7,7 @@ nav {
     padding-left: 5%; /* espaçamento de 5% para a esquerda */
     padding-right: 1.5%; /* espaçamento de 5% para a direita */
     background: linear-gradient(var(--gradiente2), var(--gradiente1)); /* Gradiente do Background */
-    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3); /* Sombra */
+    box-shadow: 0 4px 10px 4px var(--sombra1); /* Sombra */
 }
 .logoLeft {
     color: var(--principal); /* Cor */
@@ -101,7 +101,7 @@ com um tempo de ida e de volta de 0.4 segundos e um tamnho de 1.3 pixels */
         z-index: 99;
     }
     .links {
-        color: white; /* Atribui a cor branca aos links de navegação do menu */
+        color: var(--white); /* Atribui a cor branca aos links de navegação do menu */
     }
     .nav-links li {
         margin-left: 0;

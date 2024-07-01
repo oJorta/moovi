@@ -21,6 +21,7 @@
     --edit: #4CAF50;
     --delete: #f44336;
     --text: rgba(255, 255, 255, 0.5);
+    --sombra1: rgba(19, 35, 47, 0.3);
 }
 
 body {

@@ -18,7 +18,7 @@ a:hover {
     max-width: 600px;
     margin: 40px auto;
     border-radius: 4px;
-    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+    box-shadow: 0 4px 10px 4px var(--sombra1);
 }
 .tab-group {
     list-style: none;
@@ -133,7 +133,7 @@ textarea {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     background: var(--principal);
-    color: #ffffff;
+    color: var(--white);
     transition: all 0.5s ease;
     /* -webkit-appearance: none; */
 }

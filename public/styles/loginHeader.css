@@ -5,6 +5,7 @@ nav {
     flex-wrap: wrap; /* Reposiciona os itens da nav bar em diferentes linhas em tamanhos de telas menores */
     height: 10vh; /* Altura da nav bar */
     background: linear-gradient(var(--gradiente2), var(--gradiente1)); /* Gradiente do Background */
+    box-shadow: 0 4px 10px 4px var(--sombra1); /* Sombra */
 }
 .logoLeft {
     color: var(--principal); /* Cor */
