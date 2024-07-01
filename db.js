@@ -1,14 +1,22 @@
-//importa dependência mysql, atribui a mysql
-var mysql = require('mysql');
-// elementos para conexao com mysql
-var conexao = mysql.createConnection({
+const mysql = require('mysql');
+
+// Elementos para conexao com MySQL
+const conexao = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database:'cinema',
+    database: 'cinema',
     multipleStatements: true
 });
-//executar conexao com BD
-conexao.connect();
-//exporta modulo globalmente para rotas app.get() e app.post()
+
+// Executar conexao com BD
+conexao.connect((err) => {
+    if (err) {
+        console.error('Erro ao conectar ao banco de dados:', err);
+    } else {
+        console.log('Conectado ao banco de dados MySQL.');
+    }
+});
+
+// Exporta módulo globalmente para rotas app.get() e app.post()
 module.exports = conexao;

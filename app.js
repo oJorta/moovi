@@ -1,21 +1,26 @@
 const express = require("express");
 const app = express();
 const mySql = require('./db.js');
-app.use(express.urlencoded({extended: false}));
-app.set("engine ejs", "ejs");
-// (1)consulta todos regitros para index.ejs
+
+app.use(express.urlencoded({ extended: false }));
+app.set("view engine", "ejs");
+
+// (1) Consulta todos registros para index.ejs
 app.get("/", function (req, res) {
-const sql = "SELECT * FROM Filme";
-mySql.query(sql, [], function (err, rows) {
-    if (err) {
-        return console.error("Erro no retorno da SELECT...");
-    }
-        res.render("index.ejs", { dados: rows });
+    const sql = "SELECT * FROM Filme";
+    mySql.query(sql, [], function (err, rows) {
+        if (err) {
+            console.error("Erro no retorno da SELECT...", err);
+            return res.status(500).send("Erro ao consultar o banco de dados.");
+        }
+        res.render("index", { dados: rows });
     });
 });
+
 app.listen(3000, () => {
-  console.log('SERVIDOR ATIVO, ACESSE http://localhost:3000');
+    console.log('SERVIDOR ATIVO, ACESSE http://localhost:3000');
 });
+
 
 
 // // Rota para renderizar a página inicial com os dados do banco de dados
