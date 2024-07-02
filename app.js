@@ -139,6 +139,10 @@ app.get("/search", (req, res) => {
     res.render("search");
 });
 
+app.get("/adicionar", (req, res) => {
+    res.render("adicionar");
+});
+
 app.listen(3000, () => {
     console.log('SERVIDOR ATIVO, ACESSE http://localhost:3000');
 });
