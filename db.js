@@ -1,10 +1,10 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 // Elementos para conexao com MySQL
 const conexao = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: '123',
     database: 'cinema',
     multipleStatements: true
 });
