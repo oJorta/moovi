@@ -5,6 +5,9 @@ const mySql = require('./db.js');
 app.use(express.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 
+// Servindo arquivos estáticos da pasta 'public'
+app.use(express.static('public'));
+
 // (1) Consulta todos registros
 app.get("/home", function (req, res) {
     const sql = "SELECT * FROM Filme";
