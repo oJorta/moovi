@@ -10,7 +10,7 @@ app.use(express.static('public'));
 
 // (1) Consulta todos registros
 app.get("/home", function (req, res) {
-    const sql = "SELECT Filme.*, Genero.Nome AS Genero FROM Filme JOIN Genero ON Filme.FK_Genero = Genero.Id";
+    const sql = "SELECT Filme.*, Genero.Nome AS Genero FROM Filme JOIN Genero ON Filme.FK_Genero = Genero.Id LEFT JOIN Aluguel ON Filme.Id = Aluguel.FK_Filme AND Aluguel.Vigente = true WHERE Aluguel.Id IS NULL OR Aluguel.Vigente = false";
     mySql.query(sql, [], function (err, rows) {
         if (err) {
             console.error("Erro no retorno da SELECT...", err);
@@ -32,7 +32,6 @@ app.post("/cadastro", async (req, res) => {
     const { email, telefone, pais, estado, logradouro, cep, username, password, nome } = req.body;
 
     try {
-        const hashedPassword = await bcrypt.hash(password, 10);
         mySql.beginTransaction(err => {
             if (err) {
                 return res.status(500).send("Erro ao iniciar a transação.");
@@ -62,7 +61,7 @@ app.post("/cadastro", async (req, res) => {
 
                     // Inserir na tabela Usuario
                     const usuarioQuery = "INSERT INTO Usuario (Username, Password) VALUES (?, ?)";
-                    mySql.query(usuarioQuery, [username, hashedPassword], (err, usuarioResult) => {
+                    mySql.query(usuarioQuery, [username, password], (err, usuarioResult) => {
                         if (err) {
                             return mySql.rollback(() => {
                                 res.status(500).send("Erro ao inserir na tabela Usuario.");
