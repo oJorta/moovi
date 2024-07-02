@@ -1,25 +1,31 @@
-const express = require("express");
+// app.js
+const express = require('express');
 const app = express();
-const mySql = require('./db.js');
+const path = require('path');
+const conexao = require('./db'); // Certifique-se de que o caminho está correto
 
+// Configura o EJS como engine de templates
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Middleware para parsing de URL-encoded bodies
 app.use(express.urlencoded({ extended: false }));
-app.set("view engine", "ejs");
 
-// // (1) Consulta todos registros para index.ejs
-// app.get("/", function (req, res) {
-//     const sql = "SELECT * FROM Filme";
-//     mySql.query(sql, [], function (err, rows) {
-//         if (err) {
-//             console.error("Erro no retorno da SELECT...", err);
-//             return res.status(500).send("Erro ao consultar o banco de dados.");
-//         }
-//         res.render("index", { dados: rows });
-//     });
-// });
+// (1) Consulta todos registros para home.ejs
+app.get("/home", function (req, res) {
+    const sql = "SELECT * FROM Filme";
+    conexao.query(sql, [], function (err, rows) {
+        if (err) {
+            console.error("Erro no retorno da SELECT...", err);
+            return res.status(500).send("Erro ao consultar o banco de dados.");
+        }
+        res.render("home", { dados: rows });
+    });
+});
 
-// app.listen(3000, () => {
-//     console.log('SERVIDOR ATIVO, ACESSE http://localhost:3000');
-// });
+app.listen(3000, () => {
+    console.log('SERVIDOR ATIVO, ACESSE http://localhost:3000');
+});
 
 const bcrypt = require('bcrypt');
 
