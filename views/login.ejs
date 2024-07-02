@@ -68,17 +68,17 @@
             </div>
             <div id="login">   
                 <h1>Bem vindo de volta!</h1>
-                <form action="/login" method="post">
+                <form id="login-form" action="/login" method="post">
                     <div class="field-wrap">
-                        <label>Email<span class="req">*</span></label>
-                        <input type="email" name="email" required autocomplete="off"/>
+                        <label>Nome de usuário<span class="req">*</span></label>
+                        <input type="text" name="username" required autocomplete="off"/>
                     </div>
                     <div class="field-wrap">
                         <label>Senha<span class="req">*</span></label>
                         <input type="password" name="password" required autocomplete="off"/>
                     </div>
                     <p class="forgot"><a href="#">Esqueceu a senha?</a></p>
-                    <button class="button button-block">Login</button>
+                    <button type="submit" class="button button-block">Login</button>
                 </form>
             </div>
         </div>
@@ -139,6 +139,31 @@
                     cepWrap.addClass('hidden');
                     $('#cep').removeAttr('required');
                 }
+            });
+
+            // Submeter formulário de login via AJAX
+            $('#login-form').submit(function(event) {
+                event.preventDefault();
+                
+                var formData = $(this).serialize();
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '/login',
+                    data: formData,
+                    success: function(response) {
+                        console.log(response);
+                        localStorage.setItem('userId', response.userId);
+                        localStorage.setItem('username', response.username);
+                        // Aqui você pode redirecionar ou realizar outras ações após o login bem-sucedido
+                        window.location.href = '/home'; // Exemplo de redirecionamento
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Erro ao fazer login:', error);
+                        // Exemplo simples de exibir mensagem de erro na página
+                        $('#login-error').text('Nome de usuário ou senha incorretos.').show();
+                    }
+                });
             });
         });
     </script>
