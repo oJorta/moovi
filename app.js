@@ -64,7 +64,6 @@ app.post("/cadastro", async (req, res) => {
                     mySql.query(usuarioQuery, [username, password], (err, usuarioResult) => {
                         if (err) {
                             return mySql.rollback(() => {
-                                console.log(err)
                                 res.status(500).send("Erro ao inserir na tabela Usuario.");
                             });
                         }
@@ -86,7 +85,9 @@ app.post("/cadastro", async (req, res) => {
                                         res.status(500).send("Erro ao fazer commit da transação.");
                                     });
                                 }
-                                res.send("Cadastro realizado com sucesso!");
+                                
+                                // Envie uma resposta de sucesso para o AJAX
+                                res.json({ message: "Cadastro realizado com sucesso!" });
                             });
                         });
                     });

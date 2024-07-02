@@ -1,175 +1,210 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/login.css">
-    <link rel="stylesheet" href="/styles/global.css"> <!-- Inclui o CSS global -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/login.css" />
+    <link rel="stylesheet" href="/styles/global.css" />
+    <!-- Inclui o CSS global -->
     <title>Odeio Cinema</title>
-</head>
-<body>
-    <%- include('components/loginHeader') %> <!-- Inclui o header.ejs -->
+    <style>
+      .alert {
+        display: none;
+        padding: 15px;
+        background-color: #4caf50;
+        color: white;
+        margin-bottom: 15px;
+      }
+
+      .alert.success {
+        background-color: #4caf50;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('components/loginHeader') %>
+    <!-- Inclui o header.ejs -->
     <div class="form">
-        <ul class="tab-group">
-            <li class="tab active"><a href="#signup">Cadastro</a></li>
-            <li class="tab"><a href="#login">Login</a></li>
-        </ul>
-        <div class="tab-content">
-            <div id="signup">
-                <h1>Faça seu cadastro!</h1>
-                <form action="/cadastro" method="post">
-                    <div class="field-wrap">
-                        <label>Nome<span class="req">*</span></label>
-                        <input type="text" name="nome" required autocomplete="off" />
-                    </div>
-                    <div class="selectCountry">
-                        <select id="country" name="pais" required>
-                            <option value="">Selecione um país</option>
-                            <option value="1">Brasil</option>
-                            <option value="2">Argentina</option>
-                            <option value="3">Chile</option>
-                            <option value="4">Uruguai</option>
-                            <option value="5">Paraguai</option>
-                        </select>
-                    </div>
-                    <div class="selectCountry hidden" id="state-wrap">
-                        <select id="state" name="estado">
-                            <option value="">Selecione um estado</option>
-                            <option value="1">São Paulo</option>
-                            <option value="2">Rio de Janeiro</option>
-                            <option value="3">Minas Gerais</option>
-                            <option value="4">Bahia</option>
-                            <option value="5">Paraná</option>
-                        </select>
-                    </div>
-                    <div class="field-wrap" id="address-wrap">
-                        <label>Logradouro<span class="req">*</span></label>
-                        <input type="text" name="logradouro" id="address" autocomplete="off"/>
-                    </div>
-                    <div class="field-wrap" id="cep-wrap">
-                        <label>CEP<span class="req">*</span></label>
-                        <input type="text" name="cep" id="cep" autocomplete="off"/>
-                    </div>
-                    <div class="field-wrap">
-                        <label>Telefone<span class="req">*</span></label>
-                        <input type="tel" name="telefone" required autocomplete="off"/>
-                    </div>
-                    <div class="field-wrap">
-                        <label>Email<span class="req">*</span></label>
-                        <input type="email" name="email" required autocomplete="off"/>
-                    </div>
-                    <div class="field-wrap">
-                        <label>Nome de usuário<span class="req">*</span></label>
-                        <input type="username" name="username" required autocomplete="off"/>
-                    </div>
-                    <div class="field-wrap">
-                        <label>Senha<span class="req">*</span></label>
-                        <input type="password" name="password" required autocomplete="off"/>
-                    </div>
-                    <button type="submit" class="button button-block">Seja bem vindo!</button>
-                </form>
+      <ul class="tab-group">
+        <li class="tab active"><a href="#signup">Cadastro</a></li>
+        <li class="tab"><a href="#login">Login</a></li>
+      </ul>
+      <div class="tab-content">
+        <div id="signup">
+          <h1>Faça seu cadastro!</h1>
+          <form id="cadastroForm" method="post">
+            <div class="field-wrap">
+              <label>Nome<span class="req">*</span></label>
+              <input type="text" name="nome" required autocomplete="off" />
             </div>
-            <div id="login">   
-                <h1>Bem vindo de volta!</h1>
-                <form id="login-form" action="/login" method="post">
-                    <div class="field-wrap">
-                        <label>Nome de usuário<span class="req">*</span></label>
-                        <input type="text" name="username" required autocomplete="off"/>
-                    </div>
-                    <div class="field-wrap">
-                        <label>Senha<span class="req">*</span></label>
-                        <input type="password" name="password" required autocomplete="off"/>
-                    </div>
-                    <p class="forgot"><a href="#">Esqueceu a senha?</a></p>
-                    <button type="submit" class="button button-block">Login</button>
-                </form>
+            <div class="selectCountry">
+              <select id="country" name="pais" required>
+                <option value="">Selecione um país</option>
+                <option value="1">Brasil</option>
+                <option value="2">Argentina</option>
+                <option value="3">Chile</option>
+                <option value="4">Uruguai</option>
+                <option value="5">Paraguai</option>
+              </select>
             </div>
+            <div class="selectCountry hidden" id="state-wrap">
+              <select id="state" name="estado">
+                <option value="">Selecione um estado</option>
+                <option value="1">São Paulo</option>
+                <option value="2">Rio de Janeiro</option>
+                <option value="3">Minas Gerais</option>
+                <option value="4">Bahia</option>
+                <option value="5">Paraná</option>
+              </select>
+            </div>
+            <div class="field-wrap" id="address-wrap">
+              <label>Logradouro<span class="req">*</span></label>
+              <input type="text" name="logradouro" id="address" autocomplete="off" />
+            </div>
+            <div class="field-wrap" id="cep-wrap">
+              <label>CEP<span class="req">*</span></label>
+              <input type="text" name="cep" id="cep" autocomplete="off" />
+            </div>
+            <div class="field-wrap">
+              <label>Telefone<span class="req">*</span></label>
+              <input type="tel" name="telefone" required autocomplete="off" />
+            </div>
+            <div class="field-wrap">
+              <label>Email<span class="req">*</span></label>
+              <input type="email" name="email" required autocomplete="off" />
+            </div>
+            <div class="field-wrap">
+              <label>Nome de usuário<span class="req">*</span></label>
+              <input type="username" name="username" required autocomplete="off" />
+            </div>
+            <div class="field-wrap">
+              <label>Senha<span class="req">*</span></label>
+              <input type="password" name="password" required autocomplete="off" />
+            </div>
+            <button type="submit" class="button button-block">Seja bem vindo!</button>
+          </form>
+          <div id="alertCadastro" class="alert"></div>
         </div>
+        <div id="login">
+          <h1>Bem vindo de volta!</h1>
+          <form id="login-form" action="/login" method="post">
+            <div class="field-wrap">
+              <label>Nome de usuário<span class="req">*</span></label>
+              <input type="text" name="username" required autocomplete="off" />
+            </div>
+            <div class="field-wrap">
+              <label>Senha<span class="req">*</span></label>
+              <input type="password" name="password" required autocomplete="off" />
+            </div>
+            <p class="forgot"><a href="#">Esqueceu a senha?</a></p>
+            <button type="submit" class="button button-block">Login</button>
+          </form>
+        </div>
+      </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('.form').find('input, textarea').on('keyup blur focus', function (e) {
-                var $this = $(this), label = $this.prev('label');
-                if (e.type === 'keyup') {
-                    if ($this.val() === '') {
-                        label.removeClass('active highlight');
-                    } else {
-                        label.addClass('active highlight');
-                    }
-                } else if (e.type === 'blur') {
-                    if ($this.val() === '' ) {
-                        label.removeClass('active highlight'); 
-                    } else {
-                        label.removeClass('highlight');   
-                    }   
-                } else if (e.type === 'focus') {
-                    if ($this.val() === '' ) {
-                        label.removeClass('highlight'); 
-                    } else if ($this.val() !== '' ) {
-                        label.addClass('highlight');
-                    }
-                }
-            });
-
-            $('.tab a').on('click', function (e) {
-                e.preventDefault();
-                $(this).parent().addClass('active');
-                $(this).parent().siblings().removeClass('active');
-                var target = $(this).attr('href');
-                $('.tab-content > div').not(target).hide();
-                $(target).fadeIn(600);
-            });
-
-            $('#country').on('change', function() {
-                var stateWrap = $('#state-wrap');
-                var addressWrap = $('#address-wrap');
-                var cepWrap = $('#cep-wrap');
-                var isBrazil = $(this).val() === '1'; // Verificar se o país é Brasil
-                
-                if (isBrazil) {
-                    stateWrap.removeClass('hidden');
-                    $('#state').attr('required', 'required');
-                    addressWrap.removeClass('hidden');
-                    $('#address').attr('required', 'required');
-                    cepWrap.removeClass('hidden');
-                    $('#cep').attr('required', 'required');
-                } else {
-                    stateWrap.addClass('hidden');
-                    $('#state').removeAttr('required');
-                    addressWrap.addClass('hidden');
-                    $('#address').removeAttr('required');
-                    cepWrap.addClass('hidden');
-                    $('#cep').removeAttr('required');
-                }
-            });
-
-            // Submeter formulário de login via AJAX
-            $('#login-form').submit(function(event) {
-                event.preventDefault();
-                
-                var formData = $(this).serialize();
-                
-                $.ajax({
-                    type: 'POST',
-                    url: '/login',
-                    data: formData,
-                    success: function(response) {
-                        console.log(response);
-                        localStorage.setItem('userId', response.userId);
-                        localStorage.setItem('username', response.username);
-                        // Aqui você pode redirecionar ou realizar outras ações após o login bem-sucedido
-                        window.location.href = '/home'; // Exemplo de redirecionamento
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Erro ao fazer login:', error);
-                        // Exemplo simples de exibir mensagem de erro na página
-                        $('#login-error').text('Nome de usuário ou senha incorretos.').show();
-                    }
-                });
-            });
+      $(document).ready(function () {
+        $("#cadastroForm").submit(function (event) {
+          event.preventDefault();
+          $.ajax({
+            type: "POST",
+            url: "/cadastro",
+            data: $(this).serialize(),
+            success: function (response) {
+              $("#alertCadastro").removeClass("alert-danger").addClass("alert-success").text(response.message).fadeIn();
+              $("#cadastroForm")[0].reset();
+            },
+            error: function (error) {
+              $("#alertCadastro").removeClass("alert-success").addClass("alert-danger").text("Erro ao cadastrar. Tente novamente.").fadeIn();
+            },
+          });
         });
+
+        $(".form")
+          .find("input, textarea")
+          .on("keyup blur focus", function (e) {
+            var $this = $(this),
+              label = $this.prev("label");
+            if (e.type === "keyup") {
+              if ($this.val() === "") {
+                label.removeClass("active highlight");
+              } else {
+                label.addClass("active highlight");
+              }
+            } else if (e.type === "blur") {
+              if ($this.val() === "") {
+                label.removeClass("active highlight");
+              } else {
+                label.removeClass("highlight");
+              }
+            } else if (e.type === "focus") {
+              if ($this.val() === "") {
+                label.removeClass("highlight");
+              } else if ($this.val() !== "") {
+                label.addClass("highlight");
+              }
+            }
+          });
+
+        $(".tab a").on("click", function (e) {
+          e.preventDefault();
+          $(this).parent().addClass("active");
+          $(this).parent().siblings().removeClass("active");
+          var target = $(this).attr("href");
+          $(".tab-content > div").not(target).hide();
+          $(target).fadeIn(600);
+        });
+
+        $("#country").on("change", function () {
+          var stateWrap = $("#state-wrap");
+          var addressWrap = $("#address-wrap");
+          var cepWrap = $("#cep-wrap");
+          var isBrazil = $(this).val() === "1"; // Verificar se o país é Brasil
+
+          if (isBrazil) {
+            stateWrap.removeClass("hidden");
+            $("#state").attr("required", "required");
+            addressWrap.removeClass("hidden");
+            $("#address").attr("required", "required");
+            cepWrap.removeClass("hidden");
+            $("#cep").attr("required", "required");
+          } else {
+            stateWrap.addClass("hidden");
+            $("#state").removeAttr("required");
+            addressWrap.addClass("hidden");
+            $("#address").removeAttr("required");
+            cepWrap.addClass("hidden");
+            $("#cep").removeAttr("required");
+          }
+        });
+
+        // Submeter formulário de login via AJAX
+        $("#login-form").submit(function (event) {
+          event.preventDefault();
+
+          var formData = $(this).serialize();
+
+          $.ajax({
+            type: "POST",
+            url: "/login",
+            data: formData,
+            success: function (response) {
+              console.log(response);
+              localStorage.setItem("userId", response.userId);
+              localStorage.setItem("username", response.username);
+              // Aqui você pode redirecionar ou realizar outras ações após o login bem-sucedido
+              window.location.href = "/home"; // Exemplo de redirecionamento
+            },
+            error: function (xhr, status, error) {
+              console.error("Erro ao fazer login:", error);
+              // Exemplo simples de exibir mensagem de erro na página
+              $("#login-error").text("Nome de usuário ou senha incorretos.").show();
+            },
+          });
+        });
+      });
     </script>
-</body>
+  </body>
 </html>
