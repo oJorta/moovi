@@ -64,6 +64,7 @@ app.post("/cadastro", async (req, res) => {
                     mySql.query(usuarioQuery, [username, password], (err, usuarioResult) => {
                         if (err) {
                             return mySql.rollback(() => {
+                                console.log(err)
                                 res.status(500).send("Erro ao inserir na tabela Usuario.");
                             });
                         }
