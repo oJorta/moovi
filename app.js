@@ -103,6 +103,7 @@ app.post("/cadastro", async (req, res) => {
 app.post("/login", (req, res) => {
     const { username, password } = req.body;
 
+    // Consulta para verificar as credenciais do usuário
     const query = "SELECT Id, Username FROM Usuario WHERE Username = ? AND Password = ?";
     mySql.query(query, [username, password], (err, results) => {
         if (err) {
@@ -113,10 +114,25 @@ app.post("/login", (req, res) => {
         }
 
         const user = results[0];
-        res.json({
-            success: true,
-            userId: user.Id,
-            username: user.Username
+        const userId = user.Id;
+
+        // Verifica se o usuário é administrador
+        const checkAdminSql = "SELECT 1 FROM Admin WHERE UsuarioId = ?";
+        mySql.query(checkAdminSql, [userId], (err, result) => {
+            if (err) {
+                console.error('Erro ao verificar admin:', err);
+                return res.status(500).json({ success: false, message: 'Erro ao verificar admin' });
+            }
+
+            const isAdmin = result.length > 0;
+
+            // Retorna a resposta de login com o status de administrador
+            res.json({
+                success: true,
+                userId: user.Id,
+                username: user.Username,
+                isAdmin: isAdmin
+            });
         });
     });
 });
@@ -133,8 +149,45 @@ app.get("/search", (req, res) => {
 });
 
 app.get("/admin", (req, res) => {
-    res.render("admin");
+    const sql = "SELECT * FROM Filme";
+    mySql.query(sql, [], function (err, rows) {
+        if (err) {
+            console.error("Erro no retorno da SELECT...", err);
+            return res.status(500).send("Erro ao consultar o banco de dados.");
+        }
+        res.render("admin", { dados: rows });
+    });
 });
+
+app.delete('/delete/:id', (req, res) => {
+    const movieId = req.params.id;
+    const userId = req.body.userId;
+
+    // Verificar se o usuário é administrador
+    const checkAdminSql = "SELECT 1 FROM Admin WHERE UsuarioId = ?";
+    mySql.query(checkAdminSql, [userId], (err, result) => {
+        if (err) {
+            console.error('Erro ao verificar admin:', err);
+            return res.status(500).json({ success: false, message: 'Erro ao verificar admin' });
+        }
+
+        if (result.length === 0) {
+            return res.status(403).json({ success: false, message: 'Acesso negado' });
+        }
+
+        // Usuário é administrador, proceder com a exclusão
+        const deleteSql = 'DELETE FROM Filme WHERE Id = ?';
+        mySql.query(deleteSql, [movieId], (err, result) => {
+            if (err) {
+                console.error('Erro ao deletar filme:', err);
+                return res.status(500).json({ success: false, message: 'Erro ao deletar filme' });
+            }
+
+            res.json({ success: true, message: 'Filme deletado com sucesso' });
+        });
+    });
+});
+
 
 // Rota GET para buscar filmes com base nos filtros
 app.get('/search2', (req, res) => {

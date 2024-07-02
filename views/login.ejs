@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles/login.css" />
     <link rel="stylesheet" href="/styles/global.css" />
-    <!-- Inclui o CSS global -->
     <title>Odeio Cinema</title>
     <style>
       .alert {
@@ -24,7 +23,6 @@
   </head>
   <body>
     <%- include('components/loginHeader') %>
-    <!-- Inclui o header.ejs -->
     <div class="form">
       <ul class="tab-group">
         <li class="tab active"><a href="#signup">Cadastro</a></li>
@@ -76,7 +74,7 @@
             </div>
             <div class="field-wrap">
               <label>Nome de usuário<span class="req">*</span></label>
-              <input type="username" name="username" required autocomplete="off" />
+              <input type="text" name="username" required autocomplete="off" />
             </div>
             <div class="field-wrap">
               <label>Senha<span class="req">*</span></label>
@@ -91,11 +89,11 @@
           <form id="login-form" action="/login" method="post">
             <div class="field-wrap">
               <label>Nome de usuário<span class="req">*</span></label>
-              <input type="text" name="username" required autocomplete="off" />
+              <input type="text" id="login-username" name="username" required autocomplete="off" />
             </div>
             <div class="field-wrap">
               <label>Senha<span class="req">*</span></label>
-              <input type="password" name="password" required autocomplete="off" />
+              <input type="password" id="login-password" name="password" required autocomplete="off" />
             </div>
             <p class="forgot"><a href="#">Esqueceu a senha?</a></p>
             <button type="submit" class="button button-block">Login</button>
@@ -184,23 +182,30 @@
         $("#login-form").submit(function (event) {
           event.preventDefault();
 
-          var formData = $(this).serialize();
+          var username = $("#login-username").val();
+          var password = $("#login-password").val();
 
           $.ajax({
             type: "POST",
             url: "/login",
-            data: formData,
+            data: { username: username, password: password },
             success: function (response) {
-              console.log(response);
-              localStorage.setItem("userId", response.userId);
-              localStorage.setItem("username", response.username);
-              // Aqui você pode redirecionar ou realizar outras ações após o login bem-sucedido
-              window.location.href = "/home"; // Exemplo de redirecionamento
+              if (response.success) {
+                localStorage.setItem("userId", response.userId);
+                localStorage.setItem("isAdmin", response.isAdmin);
+                // Redirecionar com base no status de administrador
+                if (response.isAdmin) {
+                  window.location.href = "/admin";
+                } else {
+                  window.location.href = "/home";
+                }
+              } else {
+                alert("Login failed");
+              }
             },
-            error: function (xhr, status, error) {
-              console.error("Erro ao fazer login:", error);
-              // Exemplo simples de exibir mensagem de erro na página
-              $("#login-error").text("Nome de usuário ou senha incorretos.").show();
+            error: function (error) {
+              console.error("Login error:", error);
+              alert("Login error");
             },
           });
         });
