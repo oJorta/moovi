@@ -120,7 +120,7 @@ app.post("/login", (req, res) => {
         });
     });
 });
-
+/*
 app.get("/search", (req, res) => {
     const sql = "SELECT Filme.*, Genero.Nome AS Genero FROM Filme JOIN Genero ON Filme.FK_Genero = Genero.Id";
     mySql.query(sql, [], function (err, rows) {
@@ -131,9 +131,13 @@ app.get("/search", (req, res) => {
         res.render("search", { dados: rows });
     });
 });
-
+*/
 app.get("/admin", (req, res) => {
     res.render("admin");
+});
+
+app.get("/search", (req, res) => {
+    res.render("search");
 });
 
 app.listen(3000, () => {
