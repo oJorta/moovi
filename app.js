@@ -120,7 +120,7 @@ app.post("/login", (req, res) => {
         });
     });
 });
-/*
+
 app.get("/search", (req, res) => {
     const sql = "SELECT Filme.*, Genero.Nome AS Genero FROM Filme JOIN Genero ON Filme.FK_Genero = Genero.Id";
     mySql.query(sql, [], function (err, rows) {
@@ -131,13 +131,52 @@ app.get("/search", (req, res) => {
         res.render("search", { dados: rows });
     });
 });
-*/
+
 app.get("/admin", (req, res) => {
     res.render("admin");
 });
 
-app.get("/search", (req, res) => {
-    res.render("search");
+// Rota GET para buscar filmes com base nos filtros
+app.get('/search2', (req, res) => {
+    const searchTerm = req.query.searchTerm || ''; // termo de pesquisa, opcional
+    const minDuration = req.query.minDuration || 0; // duração mínima, opcional
+    const maxDuration = req.query.maxDuration || 999; // duração máxima, opcional
+    const releaseYear = req.query.releaseYear || ''; // ano de lançamento, opcional
+    const genre = req.query.genre || ''; // gênero, opcional
+    const sortBy = req.query.sortBy || 'Nome'; // ordenar por, padrão é nome
+    const orderBy = req.query.orderBy || 'ASC'; // ordem, padrão é ascendente
+
+    let sql = `
+        SELECT Filme.*, Genero.Nome AS Genero 
+        FROM Filme 
+        JOIN Genero ON Filme.FK_Genero = Genero.Id 
+        WHERE Filme.Nome LIKE ? 
+        AND Filme.Duracao >= ? 
+        AND Filme.Duracao <= ? 
+        AND YEAR(Filme.DataLancamento) LIKE ? 
+        AND Genero.id LIKE ? 
+        ORDER BY ${sortBy} ${orderBy}
+    `;
+
+    // Valores para substituir na consulta SQL
+    const values = [
+        `%${searchTerm}%`,
+        minDuration,
+        maxDuration,
+        `%${releaseYear}%`,
+        `%${genre}%`
+    ];
+
+    console.log(sql)
+
+    mySql.query(sql, values, (err, results) => {
+        if (err) {
+            console.error('Erro ao buscar filmes:', err);
+            res.status(500).json({ error: 'Erro ao buscar filmes' });
+            return;
+        }
+        res.json(results); // Envia os resultados como resposta em formato JSON
+    });
 });
 
 app.listen(3000, () => {

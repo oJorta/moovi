@@ -1,80 +1,168 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/movieCard.css">
-    <link rel="stylesheet" href="/styles/filter.css">
-    <!-- <link rel="stylesheet" href="/styles/login.css"> -->
-    <link rel="stylesheet" href="/styles/global.css"> <!-- Inclui o CSS global -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/movieCard.css" />
+    <link rel="stylesheet" href="/styles/filter.css" />
+    <link rel="stylesheet" href="/styles/global.css" />
     <title>Odeio Cinema</title>
-</head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
 
-<body>
-    <%- include('components/header') %> <!-- Inclui o header.ejs -->
+  <body>
+    <%- include('components/header') %>
     <main class="main">
-        <div class="searchContainer">
-            <svg class="searchIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" alt="search icon">
-                <path d="M46.599 46.599a4.498 4.498 0 0 1-6.363 0l-7.941-7.941C29.028 40.749 25.167 42 21 42 9.402 42 0 32.598 0 21S9.402 0 21 0s21 9.402 21 21c0 4.167-1.251 8.028-3.342 11.295l7.941 7.941a4.498 4.498 0 0 1 0 6.363zM21 6C12.717 6 6 12.714 6 21s6.717 15 15 15c8.286 0 15-6.714 15-15S29.286 6 21 6z"></path>
-            </svg>
-            <input class="inputBox" id="inputBox" type="text" placeholder="Pesquisar filme">
+      <div class="searchContainer">
+        <svg class="searchIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" alt="search icon">
+          <path
+            d="M46.599 46.599a4.498 4.498 0 0 1-6.363 0l-7.941-7.941C29.028 40.749 25.167 42 21 42 9.402 42 0 32.598 0 21S9.402 0 21 0s21 9.402 21 21c0 4.167-1.251 8.028-3.342 11.295l7.941 7.941a4.498 4.498 0 0 1 0 6.363zM21 6C12.717 6 6 12.714 6 21s6.717 15 15 15c8.286 0 15-6.714 15-15S29.286 6 21 6z"
+          ></path>
+        </svg>
+        <input class="inputBox" id="inputBox" type="text" placeholder="Pesquisar filme" />
+      </div>
+
+      <div class="filterContainer">
+        <div class="filterItem">
+          <label for="minDurationInput" class="labelInput">Duração mínima:</label>
+          <input type="number" id="minDurationInput" class="filterInput" placeholder="Digite a duração mínima" />
         </div>
-
-        <div class="filterContainer">
-            <div class="filterItem">
-                <label for="minDurationInput" class="labelInput">Duração mínima:</label>
-                <input type="number" id="minDurationInput" class="filterInput" placeholder="Digite a duração mínima">
-            </div>
-            <div class="filterItem">
-                <label for="maxDurationInput" class="labelInput">Duração máxima:</label>
-                <input type="number" id="maxDurationInput" class="filterInput" placeholder="Digite a duração máxima">
-            </div>
-          </div>
-
-        <div class="filterContainer">
-            <div class="filterItem">
-                <label for="yearInput" class="labelInput">Ano de Lançamento:</label>
-                <input type="number" id="yearInput" class="filterInput" placeholder="Digite o ano">
-            </div>
-            <div class="filterItem">
-                <label for="genreSelect" class="labelInput">Gênero:</label>
-                <select id="genreSelect" class="filterSelect">
-                    <option value="">Todos</option>
-                    <option value="Ação">Ação</option>
-                    <option value="Comédia">Comédia</option>
-                    <option value="Infantil">Infantil</option>
-                    <option value="Animação">Animação</option>
-                    <option value="Ficção Científica">Ficção Científica</option>
-                    <option value="Terror">Terror</option>
-                    <option value="Aventura">Aventura</option>
-                    <option value="Romance">Romance</option>
-                </select>
-            </div>
+        <div class="filterItem">
+          <label for="maxDurationInput" class="labelInput">Duração máxima:</label>
+          <input type="number" id="maxDurationInput" class="filterInput" placeholder="Digite a duração máxima" />
         </div>
+      </div>
 
-        <div class="filterContainer">
-            <div class="filterItem">
-                <label for="genreSelect" class="labelInput">Filtrar por:</label>
-                <select id="genreSelect" class="filterSelect">
-                    <option value="">Padrão</option>
-                    <option value="anoAsc">Filmes mais antigos</option>
-                    <option value="anoDsc">Filmes mais atuais</option>
-                </select>
-            </div>
-            <div class="filterItem">
-                <label for="genreSelect" class="labelInput">Ordem Alfabética:</label>
-                <select id="genreSelect" class="filterSelect">
-                    <option value="">Padrão</option>
-                    <option value="alfabetoAsc">Crescente</option>
-                    <option value="alfabetoDsc">Decrescente</option>
-                </select>
-            </div>
+      <div class="filterContainer">
+        <div class="filterItem">
+          <label for="yearInput" class="labelInput">Ano de Lançamento:</label>
+          <input type="number" id="yearInput" class="filterInput" placeholder="Digite o ano" />
         </div>
+        <div class="filterItem">
+          <label for="genreSelect" class="labelInput">Gênero:</label>
+          <select id="genreSelect" class="filterSelect">
+            <option value="">Todos</option>
+            <option value="1">Ação</option>
+            <option value="2">Comédia</option>
+            <option value="3">Drama</option>
+            <option value="4">Ficção Científica</option>
+            <option value="5">Romance</option>
+            <option value="6">Terror</option>
+            <option value="7">Aventura</option>
+            <option value="8">Animação</option>
+            <option value="11">Infantil</option>
+          </select>
+        </div>
+      </div>
 
-        <button type="submit" class="button">Pesquisar</button>
+      <div class="filterContainer">
+        <div class="filterItem">
+          <label for="sortSelect" class="labelInput">Filtrar por:</label>
+          <select id="sortSelect" class="filterSelect">
+            <option value="">Padrão</option>
+            <option value="Filme.DataLancamento">Data de Lançamento</option>
+            <option value="Nome">Nome</option>
+            <option value="Filme.Duracao">Duração</option>
+          </select>
+        </div>
+        <div class="filterItem">
+          <label for="orderSelect" class="labelInput">Ordem:</label>
+          <select id="orderSelect" class="filterSelect">
+            <option value="">Padrão</option>
+            <option value="ASC">Crescente</option>
+            <option value="DESC">Decrescente</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="button" id="buscarButton" class="button">Pesquisar</button>
+
+      <div id="movies-container" class="movies-container"></div>
+
+      <script>
+        function renderMovies(movies) {
+          const moviesContainer = document.getElementById("movies-container");
+          moviesContainer.innerHTML = ""; // Limpa o conteúdo atual
+
+          // Verifica se movies é um array
+          if (!Array.isArray(movies)) {
+            console.error("Erro: Os dados recebidos não são um array.");
+            return;
+          }
+
+          movies.forEach((movie) => {
+            const movieCard = document.createElement("div");
+            movieCard.className = "movie-card";
+            movieCard.innerHTML = `
+            <img src="../Posters/${movie.Poster}" alt="Poster do Filme" class="movie-poster">
+            <div class="movie-details">
+                <h2 class="movie-title">${movie.Nome}</h2>
+                <p class="movie-synopsis">${movie.Sinopse}</p>
+                <p class="movie-info"><strong>Duração:</strong> ${movie.Duracao} min</p>
+                <p class="movie-info"><strong>Gênero:</strong> ${movie.Genero}</p>
+                <p class="movie-info"><strong>Ano de Lançamento:</strong> ${new Date(movie.DataLancamento).getFullYear()}</p>
+                <p class="movie-info"><strong>Diretor:</strong> ${movie.Diretor}</p>
+                <p class="movie-info"><strong>Produtora:</strong> ${movie.Produtora}</p>
+                <p class="movie-info"><strong>Nota:</strong> ${movie.Nota}</p>
+                <button class="rent-button">Alugar</button>
+            </div>
+        `;
+            moviesContainer.appendChild(movieCard);
+          });
+
+          // Adiciona o evento de clique para todos os botões de alugar
+          document.querySelectorAll(".rent-button").forEach((button) => {
+            button.addEventListener("click", function () {
+              this.textContent = "Assistir";
+              this.className = "watch-button";
+            });
+          });
+        }
+
+        // Função para buscar e atualizar os dados na página
+        function buscarFilmes() {
+          const searchTerm = document.getElementById("inputBox").value;
+          const minDuration = document.getElementById("minDurationInput").value;
+          const maxDuration = document.getElementById("maxDurationInput").value;
+          const releaseYear = document.getElementById("yearInput").value;
+          const genre = document.getElementById("genreSelect").value;
+          const sortBy = document.getElementById("sortSelect").value;
+          const orderBy = document.getElementById("orderSelect").value;
+
+          $.ajax({
+            type: "GET",
+            url: "/search2",
+            data: {
+              searchTerm: searchTerm,
+              minDuration: minDuration,
+              maxDuration: maxDuration,
+              releaseYear: releaseYear,
+              genre: genre,
+              sortBy: sortBy,
+              orderBy: orderBy,
+            },
+            success: function (response) {
+              // Verifica se a resposta é um array antes de chamar renderMovies
+              if (Array.isArray(response)) {
+                renderMovies(response); // Renderiza os filmes na página
+              } else {
+                console.error("Erro: A resposta não é um array válido.");
+              }
+            },
+            error: function (error) {
+              console.error("Erro ao buscar filmes:", error);
+              // Exibir mensagem de erro na interface, se necessário
+            },
+          });
+        }
+
+        // Aguarda o documento estar pronto
+        $(document).ready(function () {
+          // Ao clicar no botão de buscar, chama a função buscarFilmes
+          $("#buscarButton").click(buscarFilmes);
+        });
+      </script>
     </main>
-</body>
-
+  </body>
 </html>
