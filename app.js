@@ -121,7 +121,14 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/search", (req, res) => {
-    res.render("search");
+    const sql = "SELECT Filme.*, Genero.Nome AS Genero FROM Filme JOIN Genero ON Filme.FK_Genero = Genero.Id";
+    mySql.query(sql, [], function (err, rows) {
+        if (err) {
+            console.error("Erro no retorno da SELECT...", err);
+            return res.status(500).send("Erro ao consultar o banco de dados.");
+        }
+        res.render("search", { dados: rows });
+    });
 });
 
 app.get("/admin", (req, res) => {
