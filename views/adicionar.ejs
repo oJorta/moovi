@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/adicionar.css">
+    <link rel="stylesheet" href="/styles/global.css"> <!-- Inclui o CSS global -->
+    <title>Odeio Cinema</title>
+</head>
+<body>
+    <%- include('components/loginHeader') %> <!-- Inclui o header.ejs -->
+    <div class="form">
+        <div class="tab-content">
+            <div id="signup">
+                <h1>Adicionar filme</h1>
+                <form action="/cadastro" method="post">
+                    <div class="field-wrap">
+                        <label>Título<span class="req">*</span></label>
+                        <input type="text" name="titulo" required autocomplete="off" />
+                    </div>
+                    <div class="field-wrap">
+                        <label>Sinopse<span class="req">*</span></label>
+                        <input type="text" name="sinopse" required autocomplete="off" />
+                    </div>
+                    <div class="field-wrap">
+                        <!-- <label>Data de Lançamento<span class="req">*</span></label> -->
+                        <input type="date" name="data_lancamento" required />
+                    </div>
+                    <div class="field-wrap">
+                        <label>Diretor<span class="req">*</span></label>
+                        <input type="text" name="diretor" required autocomplete="off" />
+                    </div>
+                    <div class="field-wrap">
+                        <label>Produtora<span class="req">*</span></label>
+                        <input type="text" name="produtora" required autocomplete="off" />
+                    </div>
+                    <div class="field-wrap">
+                        <!-- <label>Poster do Filme<span class="req">*</span></label> -->
+                        <input type="file" name="poster" accept="image/*" required />
+                    </div>
+                    <button type="submit" class="button button-block">Salvar alterações</button>
+                </form>
+            </div>
+            <div id="login">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
