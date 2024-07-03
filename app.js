@@ -183,7 +183,6 @@ app.delete('/delete/:id', (req, res) => {
     });
 });
 
-
 // Rota GET para buscar filmes com base nos filtros
 app.get('/search2', (req, res) => {
     const searchTerm = req.query.searchTerm || ''; // termo de pesquisa, opcional
@@ -229,6 +228,38 @@ app.get('/search2', (req, res) => {
 
 app.get("/adicionar", (req, res) => {
     res.render("adicionar");
+});
+
+
+const multer = require('multer');
+const path = require('path');
+
+// Configuração do Multer para salvar o poster na pasta public/Posters
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/Posters/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, req.body.titulo + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ storage: storage });
+
+app.post('/cadastro2', upload.single('Poster'), (req, res) => {
+    const { Nome, Sinopse, Duracao, DataLancamento, Diretor, Produtora } = req.body;
+    const Poster = `/Posters/${req.file.filename}`; // Caminho do poster relativo à pasta public
+    const FK_Genero = req.body.FK_Genero; // Certifique-se de que este campo é passado corretamente no formulário
+
+    const insertSql = 'INSERT INTO Filme (Nome, Sinopse, Duracao, DataLancamento, Diretor, Produtora, Poster, FK_Genero) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+    mySql.query(insertSql, [Nome, Sinopse, Duracao, DataLancamento, Diretor, Produtora, Poster, FK_Genero], (err, result) => {
+        if (err) {
+            console.error('Erro ao inserir filme:', err);
+            return res.status(500).json({ success: false, message: 'Erro ao inserir filme' });
+        }
+
+        res.json({ success: true, message: 'Filme adicionado com sucesso' });
+    });
 });
 
 app.listen(3000, () => {
