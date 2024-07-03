@@ -8,7 +8,7 @@ app.set("view engine", "ejs");
 // Servindo arquivos estáticos da pasta 'public'
 app.use(express.static('public'));
 
-// (1) Consulta todos registros
+// Pagina inicial onde pega todos os filmes que não foram alugados e que estao disponiveis na plataforma
 app.get("/home", function (req, res) {
     const sql = "SELECT Filme.*, Genero.Nome AS Genero FROM Filme JOIN Genero ON Filme.FK_Genero = Genero.Id LEFT JOIN Aluguel ON Filme.Id = Aluguel.FK_Filme AND Aluguel.Vigente = true WHERE Aluguel.Id IS NULL OR Aluguel.Vigente = false";
     mySql.query(sql, [], function (err, rows) {
@@ -139,6 +139,7 @@ app.post("/login", (req, res) => {
     });
 });
 
+// Rota Get para ir a aba de pesquisa
 app.get("/search", (req, res) => {
     const sql = "SELECT Filme.*, Genero.Nome AS Genero FROM Filme JOIN Genero ON Filme.FK_Genero = Genero.Id LEFT JOIN Aluguel ON Filme.Id = Aluguel.FK_Filme AND Aluguel.Vigente = true WHERE Aluguel.Id IS NULL OR Aluguel.Vigente = false";
     mySql.query(sql, [], function (err, rows) {
@@ -150,6 +151,7 @@ app.get("/search", (req, res) => {
     });
 });
 
+// Rota para acessar a pagina de admin
 app.get("/admin", (req, res) => {
     const sql = "SELECT * FROM Filme";
     mySql.query(sql, [], function (err, rows) {
@@ -161,6 +163,7 @@ app.get("/admin", (req, res) => {
     });
 });
 
+// Rota para o admin deletar filmes
 app.delete('/delete/:id', (req, res) => {
     const movieId = req.params.id;
 
@@ -185,7 +188,7 @@ app.delete('/delete/:id', (req, res) => {
     });
 });
 
-// Rota GET para buscar filmes com base nos filtros
+// Rota para fazer a pesquisa dos filmes
 app.get('/search2', (req, res) => {
     const searchTerm = req.query.searchTerm || ''; // termo de pesquisa, opcional
     const minDuration = req.query.minDuration || 0; // duração mínima, opcional
@@ -216,8 +219,6 @@ app.get('/search2', (req, res) => {
         `%${genre}%`
     ];
 
-    console.log(sql)
-
     mySql.query(sql, values, (err, results) => {
         if (err) {
             console.error('Erro ao buscar filmes:', err);
@@ -228,10 +229,12 @@ app.get('/search2', (req, res) => {
     });
 });
 
+// rota para acessar a pagina de adicionar
 app.get("/adicionar", (req, res) => {
     res.render("adicionar");
 });
 
+// para adicionar imagens ao sistema
 const multer = require('multer');
 const path = require('path');
 
@@ -247,6 +250,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// Rota Post para fazer o cadastro de filme
 app.post('/cadastro2', upload.single('Poster'), (req, res) => {
     const { Nome, Sinopse, Duracao, DataLancamento, Diretor, Produtora } = req.body;
     const Poster = `/Posters/${req.file.filename}`; // Caminho do poster relativo à pasta public
@@ -263,14 +267,14 @@ app.post('/cadastro2', upload.single('Poster'), (req, res) => {
     });
 });
 
+// Rota para ver o servidor online
 app.listen(3000, () => {
     console.log('SERVIDOR ATIVO, ACESSE http://localhost:3000');
 });
 
-
+// Rota para ver os filmes alugados
 app.get("/alugados", (req, res) => {
     const userId = idCliente; // Supondo que 'userId' foi armazenado corretamente após o login
-    console.log(userId)
     // Consulta para obter o ID do Cliente com base no ID do Usuário
     const clienteSql = `
         SELECT Id
@@ -290,7 +294,7 @@ app.get("/alugados", (req, res) => {
         }
 
         const clienteId = clienteResult[0].Id;
-        console.log(clienteId)
+
         // Consulta para obter os filmes alugados pelo cliente
         const filmesSql = `
             SELECT Filme.*, Genero.Nome AS Genero 
@@ -307,5 +311,25 @@ app.get("/alugados", (req, res) => {
             }
             res.render("alugados", { dados: rows });
         });
+    });
+});
+
+// Rota para alugar os filmes
+app.post('/alugar', (req, res) => {
+    const { clienteId, filmeId } = req.query; // Acessa os parâmetros da query string
+    // Monta a query para inserir um novo registro na tabela Aluguel
+    const aluguelSql = `
+        INSERT INTO Aluguel (DataAluguel, Vigente, FK_Cliente, FK_Filme)
+        VALUES (NOW(), true, ?, ?)
+    `;
+
+    mySql.query(aluguelSql, [clienteId, filmeId], (err, result) => {
+        if (err) {
+            console.error('Erro ao criar registro de aluguel:', err);
+            return res.status(500).send('Erro ao criar registro de aluguel.');
+        }
+
+        console.log('Registro de aluguel criado com sucesso.');
+        res.status(200).send('Registro de aluguel criado com sucesso.');
     });
 });

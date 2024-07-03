@@ -9,48 +9,73 @@
     <!-- Inclui o CSS global -->
     <title>Odeio Cinema</title>
   </head>
-
   <body>
     <%- include('components/header') %>
     <!-- Inclui o header.ejs -->
     <main class="main">
       <div id="movies-container" class="movies-container"></div>
       <script>
-                        // Função para renderizar filmes
-                        function renderMovies(movies) {
-                            const moviesContainer = document.getElementById('movies-container');
-                            movies.forEach(movie => {
-                                const movieCard = document.createElement('div');
-                                movieCard.className = 'movie-card';
-                                movieCard.innerHTML = `
-                                    <img src="../Posters/${movie.Poster}" alt="Poster do Filme" class="movie-poster">
-                                    <div class="movie-details">
-                                        <h2 class="movie-title">${movie.Nome}</h2>
-                                        <p class="movie-synopsis">${movie.Sinopse}</p>
-                                        <p class="movie-info"><strong>Duração:</strong> ${movie.Duracao} min</p>
-                                        <p class="movie-info"><strong>Gênero:</strong> ${movie.Genero}</p>
-                                        <p class="movie-info"><strong>Ano de Lançamento:</strong> ${new Date(movie.DataLancamento).getFullYear()}</p>
-                                        <p class="movie-info"><strong>Diretor:</strong> ${movie.Diretor}</p>
-                                        <p class="movie-info"><strong>Produtora:</strong> ${movie.Produtora}</p>
-                                        <button class="rent-button">Alugar</button>
-                                    </div>
-                                `;
-                                moviesContainer.appendChild(movieCard);
-                            });
-
-                            // Adiciona o evento de clique para todos os botões de alugar
-                            document.querySelectorAll('.rent-button').forEach(button => {
-                                button.addEventListener('click', function() {
-                                    this.textContent = 'Assistir';
-                                    this.className = 'watch-button';
+                            // Função para renderizar filmes
+                            function renderMovies(movies) {
+                                const moviesContainer = document.getElementById('movies-container');
+                                movies.forEach(movie => {
+                                    const movieCard = document.createElement('div');
+                                    movieCard.className = 'movie-card';
+                                    movieCard.innerHTML = `
+                                        <img src="../Posters/${movie.Poster}" alt="Poster do Filme" class="movie-poster">
+                                        <div class="movie-details">
+                                            <h2 class="movie-title">${movie.Nome}</h2>
+                                            <p class="movie-synopsis">${movie.Sinopse}</p>
+                                            <p class="movie-info"><strong>Duração:</strong> ${movie.Duracao} min</p>
+                                            <p class="movie-info"><strong>Gênero:</strong> ${movie.Genero}</p>
+                                            <p class="movie-info"><strong>Ano de Lançamento:</strong> ${new Date(movie.DataLancamento).getFullYear()}</p>
+                                            <p class="movie-info"><strong>Diretor:</strong> ${movie.Diretor}</p>
+                                            <p class="movie-info"><strong>Produtora:</strong> ${movie.Produtora}</p>
+                                            <button class="rent-button" onclick="alugarFilme(${movie.Id})">Alugar</button>
+                                        </div>
+                                    `;
+                                    moviesContainer.appendChild(movieCard);
                                 });
-                            });
-                        }
 
-                        // Dados dos filmes fornecidos pelo EJS
-                        const movies = <%- JSON.stringify(dados) %>;
-                        // Chamar a função para renderizar os filmes
-                        renderMovies(movies);
+                                // Adiciona o evento de clique para todos os botões de alugar
+                                document.querySelectorAll('.rent-button').forEach(button => {
+                                    button.addEventListener('click', function() {
+                                        this.textContent = 'Assistir';
+                                        this.className = 'watch-button';
+                                    });
+                                });
+                            }
+
+        function alugarFilme(filmeId) {
+            const userId = localStorage.getItem('userId'); // Obtém o ID do usuário do localStorage
+
+            // Monta a URL com os parâmetros
+            const url = `/alugar?clienteId=${userId}&filmeId=${filmeId}`;
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Aluguel criado com sucesso!');
+                    location.reload(); // Recarrega a página após criar o aluguel
+                } else {
+                    console.error('Erro ao criar aluguel:', response.statusText);
+                    // Tratar erro aqui, se necessário
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao criar aluguel:', error);
+                // Tratar erro de rede ou outro erro
+            });
+        }
+                            // Dados dos filmes fornecidos pelo EJS
+                            const movies = <%- JSON.stringify(dados) %>;
+                            // Chamar a função para renderizar os filmes
+                            renderMovies(movies);
       </script>
     </main>
   </body>
