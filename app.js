@@ -161,29 +161,24 @@ app.get("/admin", (req, res) => {
 
 app.delete('/delete/:id', (req, res) => {
     const movieId = req.params.id;
-    const userId = req.body.userId;
 
-    // Verificar se o usuário é administrador
-    const checkAdminSql = "SELECT 1 FROM Admin WHERE UsuarioId = ?";
-    mySql.query(checkAdminSql, [userId], (err, result) => {
+    // Remover os registros de aluguel relacionados ao filme
+    const deleteAluguelSql = 'DELETE FROM Aluguel WHERE FK_Filme = ?';
+    mySql.query(deleteAluguelSql, [movieId], (err, result) => {
         if (err) {
-            console.error('Erro ao verificar admin:', err);
-            return res.status(500).json({ success: false, message: 'Erro ao verificar admin' });
+            console.error('Erro ao deletar registros de aluguel:', err);
+            return res.status(500).json({ success: false, message: 'Erro ao deletar registros de aluguel' });
         }
 
-        if (result.length === 0) {
-            return res.status(403).json({ success: false, message: 'Acesso negado' });
-        }
-
-        // Usuário é administrador, proceder com a exclusão
-        const deleteSql = 'DELETE FROM Filme WHERE Id = ?';
-        mySql.query(deleteSql, [movieId], (err, result) => {
+        // Agora podemos prosseguir com a exclusão do filme
+        const deleteFilmeSql = 'DELETE FROM Filme WHERE Id = ?';
+        mySql.query(deleteFilmeSql, [movieId], (err, result) => {
             if (err) {
                 console.error('Erro ao deletar filme:', err);
                 return res.status(500).json({ success: false, message: 'Erro ao deletar filme' });
             }
 
-            res.json({ success: true, message: 'Filme deletado com sucesso' });
+            res.json({ success: true, message: 'Filme deletado com sucesso.' });
         });
     });
 });
