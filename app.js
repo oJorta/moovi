@@ -99,6 +99,8 @@ app.post("/cadastro", async (req, res) => {
     }
 });
 
+let idCliente = 0
+
 // Rota POST para processar o login do cliente
 app.post("/login", (req, res) => {
     const { username, password } = req.body;
@@ -115,7 +117,7 @@ app.post("/login", (req, res) => {
 
         const user = results[0];
         const userId = user.Id;
-
+        idCliente = user.Id;
         // Verifica se o usuário é administrador
         const checkAdminSql = "SELECT 1 FROM Admin WHERE UsuarioId = ?";
         mySql.query(checkAdminSql, [userId], (err, result) => {
@@ -138,7 +140,7 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/search", (req, res) => {
-    const sql = "SELECT Filme.*, Genero.Nome AS Genero FROM Filme JOIN Genero ON Filme.FK_Genero = Genero.Id";
+    const sql = "SELECT Filme.*, Genero.Nome AS Genero FROM Filme JOIN Genero ON Filme.FK_Genero = Genero.Id LEFT JOIN Aluguel ON Filme.Id = Aluguel.FK_Filme AND Aluguel.Vigente = true WHERE Aluguel.Id IS NULL OR Aluguel.Vigente = false";
     mySql.query(sql, [], function (err, rows) {
         if (err) {
             console.error("Erro no retorno da SELECT...", err);
@@ -230,7 +232,6 @@ app.get("/adicionar", (req, res) => {
     res.render("adicionar");
 });
 
-
 const multer = require('multer');
 const path = require('path');
 
@@ -264,4 +265,47 @@ app.post('/cadastro2', upload.single('Poster'), (req, res) => {
 
 app.listen(3000, () => {
     console.log('SERVIDOR ATIVO, ACESSE http://localhost:3000');
+});
+
+
+app.get("/alugados", (req, res) => {
+    const userId = idCliente; // Supondo que 'userId' foi armazenado corretamente após o login
+    console.log(userId)
+    // Consulta para obter o ID do Cliente com base no ID do Usuário
+    const clienteSql = `
+        SELECT Id
+        FROM Cliente
+        WHERE UsuarioId = ?
+    `;
+
+    mySql.query(clienteSql, [userId], (err, clienteResult) => {
+        if (err) {
+            console.error("Erro ao buscar ID do cliente:", err);
+            return res.status(500).send("Erro ao consultar o banco de dados.");
+        }
+
+        if (clienteResult.length === 0) {
+            console.error("Cliente não encontrado para o usuário com ID:", userId);
+            return res.status(404).send("Cliente não encontrado.");
+        }
+
+        const clienteId = clienteResult[0].Id;
+        console.log(clienteId)
+        // Consulta para obter os filmes alugados pelo cliente
+        const filmesSql = `
+            SELECT Filme.*, Genero.Nome AS Genero 
+            FROM Filme 
+            JOIN Genero ON Filme.FK_Genero = Genero.Id 
+            JOIN Aluguel ON Filme.Id = Aluguel.FK_Filme 
+            WHERE Aluguel.FK_Cliente = ? AND Aluguel.Vigente = true
+        `;
+
+        mySql.query(filmesSql, [clienteId], (err, rows) => {
+            if (err) {
+                console.error("Erro ao retornar SELECT de filmes alugados:", err);
+                return res.status(500).send("Erro ao consultar o banco de dados.");
+            }
+            res.render("alugados", { dados: rows });
+        });
+    });
 });
