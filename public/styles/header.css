@@ -6,21 +6,25 @@ nav {
     height: 10vh; /* Altura da nav bar */
     padding-left: 5%; /* espaçamento de 5% para a esquerda */
     padding-right: 1.5%; /* espaçamento de 5% para a direita */
-    background: linear-gradient(var(--gradiente2), var(--gradiente1)); /* Gradiente do Background */
+    background-color: var(--secundaria); /* Gradiente do Background */
     box-shadow: 0 4px 10px 4px var(--sombra1); /* Sombra */
 }
-.logoLeft {
-    color: var(--principal); /* Cor */
-    font-weight: 600; /* Grossura */
-    font-size: 20px; /* Tamanho da fonte */
-    line-height: 1.5; /* Altura da linha */
+
+.logo {
+    color: white;
 }
+
+.logo strong {
+    color: var(--terciaria);
+}
+
 .logoRight {
     color: var(--white); /* Cor */
     font-weight: 400; /* Grossura */
     font-size: 24px; /* Tamanho da fonte */
     line-height: 1.5; /* Altura da linha */
 }
+
 .nav-links {
     display: flex; /* Posiciona os links da nav bar em uma mesma linha */
     list-style: none; /* Remove as bolinhas padrão das listas */
