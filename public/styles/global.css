@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /* Importação das fontes uasadas no site */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 * {
     margin: 0;
@@ -8,16 +8,21 @@
     box-sizing: border-box;
     text-decoration: none;
     outline: none;
-    font-family: 'Poppins';
+    font-family: 'Inter';
 }
 
 :root {
     --gradiente1: #393E46;
     --gradiente2: #222831;
-    --principal: #00ADB5;
+    --principal: #09090B;
+    --secundaria: #18181B;
+    --terciaria: #3C58ED;
+    --purple: #0F1430;
     --principalHover: #2596be;
     --white: #fff;
+    --zinc: #F4F4F5;
     --black: #000;
+    --zinc-gray: #18181B;
     --edit: #4CAF50;
     --delete: #f44336;
     --text: rgba(255, 255, 255, 0.5);
@@ -25,8 +30,8 @@
 }
 
 body {
-    background-color: var(--principal);
-    font-family: 'Poppins';
+    background-color: var(--black);
+    font-family: 'Inter';
 }
 
 .main {

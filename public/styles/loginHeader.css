@@ -4,15 +4,20 @@ nav {
     justify-content: center;
     flex-wrap: wrap; /* Reposiciona os itens da nav bar em diferentes linhas em tamanhos de telas menores */
     height: 10vh; /* Altura da nav bar */
-    background: linear-gradient(var(--gradiente2), var(--gradiente1)); /* Gradiente do Background */
+    background-color: var(--secundaria) /* Gradiente do Background */;
     box-shadow: 0 4px 10px 4px var(--sombra1); /* Sombra */
 }
 .logoLeft {
-    color: var(--principal); /* Cor */
+    color: white; /* Cor */
     font-weight: 600; /* Grossura */
     font-size: 24px; /* Tamanho da fonte */
     line-height: 1.5; /* Altura da linha */
 }
+
+.logoLeft strong {
+    color: var(--terciaria);
+}
+
 .logoRight {
     color: var(--white); /* Cor */
     font-weight: 400; /* Grossura */
