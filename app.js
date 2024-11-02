@@ -9,7 +9,7 @@ app.set("view engine", "ejs");
 app.use(express.static('public'));
 
 // Pagina inicial onde pega todos os filmes que não foram alugados e que estao disponiveis na plataforma
-app.get("/home", function (req, res) {
+/* app.get("/home", function (req, res) {
     const sql = "SELECT Filme.*, Genero.Nome AS Genero FROM Filme JOIN Genero ON Filme.FK_Genero = Genero.Id LEFT JOIN Aluguel ON Filme.Id = Aluguel.FK_Filme AND Aluguel.Vigente = true WHERE Aluguel.Id IS NULL OR Aluguel.Vigente = false";
     mySql.query(sql, [], function (err, rows) {
         if (err) {
@@ -18,7 +18,7 @@ app.get("/home", function (req, res) {
         }
         res.render("home", { dados: rows });
     });
-});
+}); */
 
 const bcrypt = require('bcrypt');
 
@@ -26,6 +26,19 @@ const bcrypt = require('bcrypt');
 app.get("/", (req, res) => {
     res.render("login");
 });
+
+app.get("/home", (req, res) => {
+    res.render("home");
+});
+
+app.get("/search", (req, res) => {
+    res.render("search");
+});
+
+app.get("/alugados", (req, res) => {
+    res.render("alugados");
+});
+
 
 // Rota POST para processar o cadastro do cliente
 app.post("/cadastro", async (req, res) => {
@@ -140,7 +153,7 @@ app.post("/login", (req, res) => {
 });
 
 // Rota Get para ir a aba de pesquisa
-app.get("/search", (req, res) => {
+/* app.get("/search", (req, res) => {
     const sql = "SELECT Filme.*, Genero.Nome AS Genero FROM Filme JOIN Genero ON Filme.FK_Genero = Genero.Id LEFT JOIN Aluguel ON Filme.Id = Aluguel.FK_Filme AND Aluguel.Vigente = true WHERE Aluguel.Id IS NULL OR Aluguel.Vigente = false";
     mySql.query(sql, [], function (err, rows) {
         if (err) {
@@ -149,10 +162,10 @@ app.get("/search", (req, res) => {
         }
         res.render("search", { dados: rows });
     });
-});
+}); */
 
 // Rota para acessar a pagina de admin
-app.get("/admin", (req, res) => {
+/* app.get("/admin", (req, res) => {
     const sql = "SELECT * FROM Filme";
     mySql.query(sql, [], function (err, rows) {
         if (err) {
@@ -161,7 +174,7 @@ app.get("/admin", (req, res) => {
         }
         res.render("admin", { dados: rows });
     });
-});
+}); */
 
 // Rota para o admin deletar filmes
 app.delete('/delete/:id', (req, res) => {
@@ -189,7 +202,7 @@ app.delete('/delete/:id', (req, res) => {
 });
 
 // Rota para fazer a pesquisa dos filmes
-app.get('/search2', (req, res) => {
+/* app.get('/search2', (req, res) => {
     const searchTerm = req.query.searchTerm || ''; // termo de pesquisa, opcional
     const minDuration = req.query.minDuration || 0; // duração mínima, opcional
     const maxDuration = req.query.maxDuration || 999; // duração máxima, opcional
@@ -227,12 +240,12 @@ app.get('/search2', (req, res) => {
         }
         res.json(results); // Envia os resultados como resposta em formato JSON
     });
-});
+}); */
 
 // rota para acessar a pagina de adicionar
-app.get("/adicionar", (req, res) => {
+/* app.get("/adicionar", (req, res) => {
     res.render("adicionar");
-});
+}); */
 
 // para adicionar imagens ao sistema
 const multer = require('multer');
@@ -273,7 +286,7 @@ app.listen(3000, () => {
 });
 
 // Rota para ver os filmes alugados
-app.get("/alugados", (req, res) => {
+/* app.get("/alugados", (req, res) => {
     const userId = idCliente; // Supondo que 'userId' foi armazenado corretamente após o login
     // Consulta para obter o ID do Cliente com base no ID do Usuário
     const clienteSql = `
@@ -312,7 +325,7 @@ app.get("/alugados", (req, res) => {
             res.render("alugados", { dados: rows });
         });
     });
-});
+}); */
 
 // Rota para alugar os filmes
 app.post('/alugar', (req, res) => {

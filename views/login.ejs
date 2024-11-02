@@ -195,7 +195,8 @@
                 localStorage.setItem("isAdmin", response.isAdmin);
                 // Redirecionar com base no status de administrador
                 if (response.isAdmin) {
-                  window.location.href = "/admin";
+                  /* window.location.href = "/admin"; */
+                  window.location.href = "/home";
                 } else {
                   window.location.href = "/home";
                 }

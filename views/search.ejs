@@ -13,7 +13,7 @@
 
   <body>
     <%- include('components/header') %>
-    <main class="main">
+    <main class="search-main-container">
       <div class="searchContainer">
         <svg class="searchIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" alt="search icon">
           <path
@@ -26,11 +26,11 @@
       <div class="filterContainer">
         <div class="filterItem">
           <label for="minDurationInput" class="labelInput">Duração mínima:</label>
-          <input type="number" id="minDurationInput" class="filterInput" placeholder="Digite a duração mínima" />
+          <input type="number" id="minDurationInput" class="filterInput" placeholder="Min" />
         </div>
         <div class="filterItem">
           <label for="maxDurationInput" class="labelInput">Duração máxima:</label>
-          <input type="number" id="maxDurationInput" class="filterInput" placeholder="Digite a duração máxima" />
+          <input type="number" id="maxDurationInput" class="filterInput" placeholder="Máx" />
         </div>
       </div>
 
