@@ -39,6 +39,14 @@ app.get("/alugados", (req, res) => {
     res.render("alugados");
 });
 
+app.get("/admin", (req, res) => {
+    res.render("admin");
+});
+
+app.get("/adicionar", (req, res) => {
+    res.render("adicionar");
+});
+
 
 // Rota POST para processar o cadastro do cliente
 app.post("/cadastro", async (req, res) => {

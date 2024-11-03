@@ -13,12 +13,12 @@ a:hover {
     color: var(--principalHover);
 }
 .form {
-    background: linear-gradient(var(--gradiente1), var(--gradiente2));
+    background-color: var(--secundaria);
     padding: 40px;
-    max-width: 600px;
+    max-width: 500px;
     margin: 40px auto;
     border-radius: 4px;
-    box-shadow: 0 4px 10px 4px var(--sombra1);
+    box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.03) inset, 0px 1px 0px 0px rgba(255, 255, 255, 0.03) inset, 0px 8px 8px 0px rgba(0, 0, 0, 0.10), 0px 4px 4px 0px rgba(0, 0, 0, 0.10), 0px 2px 2px 0px rgba(0, 0, 0, 0.10), 0px 0px 0px 1px rgba(0, 0, 0, 0.10);
 }
 .tab-group {
     list-style: none;
@@ -57,22 +57,22 @@ a:hover {
 h1 {
     text-align: center;
     color: var(--white);
-    font-weight: 300;
+    font-weight: 500;
     margin: 0 0 40px;
 }
 label {
     position: absolute;
-    transform: translateY(6px);
+    transform: translateY(10px);
     left: 13px;
-    color: var(--white);
+    color: var(--text);
     transition: all 0.25s ease;
     /* -webkit-backface-visibility: hidden; */
     pointer-events: none;
-    font-size: 22px;
+    font-size: 16px;
 }
 label .req {
     margin: 2px;
-    color: var(--principal);
+    color: var(--terciaria);
 }
 label.active {
     transform: translateY(50px);
@@ -86,17 +86,16 @@ label.highlight {
     color: var(--white);
 }
 input, textarea {
-    font-size: 22px;
+    font-size: 16px;
     display: block;
     width: 100%;
     height: 100%;
-    padding: 5px 10px;
-    background: none;
-    background-image: none;
-    border: 1px solid var(--white);
+    padding: 10px 10px;
     color: var(--white);
     border-radius: 0;
     transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    background:#09090B;
+    border: 1px solid #27272A;
 }
 input:focus, textarea:focus {
     outline: 0;
@@ -105,6 +104,10 @@ input:focus, textarea:focus {
 textarea {
     border: 2px solid #a0b3b0;
     resize: vertical;
+}
+
+input, select {
+    border-radius: 5px;
 }
 .field-wrap {
     position: relative;
@@ -128,17 +131,19 @@ textarea {
     outline: none;
     border-radius: 0;
     padding: 15px 0;
-    font-size: 2rem;
+    font-size: 20px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    background: var(--principal);
+    background: var(--terciaria);
+    border-radius: 2px;
     color: var(--white);
-    transition: all 0.5s ease;
+    transition: 0.2s;
+    box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.03) inset, 0px 1px 0px 0px rgba(255, 255, 255, 0.03) inset, 0px 8px 8px 0px rgba(0, 0, 0, 0.10), 0px 4px 4px 0px rgba(0, 0, 0, 0.10), 0px 2px 2px 0px rgba(0, 0, 0, 0.10), 0px 0px 0px 1px rgba(0, 0, 0, 0.10);
     /* -webkit-appearance: none; */
 }
 .button:hover, .button:focus {
-    background: var(--principalHover); /* darken(#1ab188, 5%) */
+    cursor: pointer;
+    opacity: 0.6;
 }
 .button-block {
     display: block;
@@ -159,14 +164,15 @@ textarea {
 .selectGenre select {
     width: 100%;
     padding: 10px;
-    border: 1px solid var(--white); 
-    border-radius: 4px; 
-    font-size: 22px;
+    border: 1px solid var(--white); /* Borda do select principal */
+    /* border-radius: 4px; */
+    font-size: 16px;
     width: 100%;
     height: 100%;
     padding: 5px 10px;
-    background-color: linear-gradient(var(--gradiente1), var(--gradiente2));
-    color: var(--white);
+    background:#09090B;
+    border: 1px solid #27272A;
+    color: var(--text);
     outline: none;
     transition: border-color 0.3s;
 }

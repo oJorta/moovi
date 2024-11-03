@@ -12,7 +12,7 @@
   <body>
     <%- include('components/loginHeader') %>
     <main class="main">
-      <button class="delete-button" onclick="window.location.href='/adicionar'">Adicionar Filme</button>
+      <button class="add-button" onclick="window.location.href='/adicionar'">Adicionar Filme</button>
       <table>
         <thead>
           <tr>
@@ -48,7 +48,7 @@
                             }
 
                             // Dados dos filmes fornecidos pelo EJS
-                            const movies = <%- JSON.stringify(dados) %>;
+                            const movies = [1, 2, 3, 4, 5]
 
                             // Chamar a função para renderizar a tabela de filmes
                             renderMoviesTable(movies);
