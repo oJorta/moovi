@@ -1,52 +1,103 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles/movieCard.css" />
     <link rel="stylesheet" href="/styles/global.css" />
-    <!-- Inclui o CSS global -->
     <title>MOovi</title>
-  </head>
-  <body>
+</head>
+<body>
     <%- include('components/header') %>
-    <!-- Inclui o header.ejs -->
     <main class="main">
-      <div id="movies-container" class="movies-container"></div>
-      <script>
-                            // Função para renderizar filmes
-                            function renderMovies(movies) {
-                                const moviesContainer = document.getElementById('movies-container');
-                                movies.forEach(movie => {
-                                    const movieCard = document.createElement('div');
-                                    movieCard.className = 'movie-card';
-                                    movieCard.innerHTML = `
-                                        <img src="../Posters/download11.jpg" alt="Poster do Filme" class="movie-poster">
-                                        <div class="movie-details">
-                                            <h2 class="movie-title">${"O Lobo de Wall Street"}</h2>
-                                            <p class="movie-synopsis">${"Baseado na história de Jordan Belfort, desde sua ascensão como corretor de valores até a sua queda e envolvimento no crime e corrupção com o governo."}</p>
-                                            <p class="movie-info"><strong>Duração:</strong> ${"180"} min</p>
-                                            <p class="movie-info"><strong>Gênero:</strong> ${"Drama"}</p>
-                                            <p class="movie-info"><strong>Ano de Lançamento:</strong> ${new Date('2014/02/12').getFullYear()}</p>
-                                            <p class="movie-info"><strong>Diretor:</strong> ${"Scorcese"}</p>
-                                            <p class="movie-info"><strong>Produtora:</strong> ${"A24"}</p>
-                                            <button class="rent-button" onclick="alugarFilme(${24})">Assistir</button>
-                                        </div>
-                                    `;
-                                    moviesContainer.appendChild(movieCard);
-                                });
+        <section class="genre-section" id="movies-section">
+            <h2>Filmes</h2>
+            <div class="carousel-container">
+                <button class="carousel-arrow left" onclick="scrollCarousel('movies-carousel', -300)">&#10094;</button>
+                <div class="carousel" id="movies-carousel"></div>
+                <button class="carousel-arrow right" onclick="scrollCarousel('movies-carousel', 300)">&#10095;</button>
+            </div>
+        </section>
+        <section class="genre-section" id="series-section">
+            <h2>Séries</h2>
+            <div class="carousel-container">
+                <button class="carousel-arrow left" onclick="scrollCarousel('series-carousel', -300)">&#10094;</button>
+                <div class="carousel" id="series-carousel"></div>
+                <button class="carousel-arrow right" onclick="scrollCarousel('series-carousel', 300)">&#10095;</button>
+            </div>
+        </section>
+        <section class="genre-section" id="transmissions-section">
+            <h2>Transmissões ao Vivo</h2>
+            <div class="carousel-container">
+                <button class="carousel-arrow left" onclick="scrollCarousel('transmissions-carousel', -300)">&#10094;</button>
+                <div class="carousel" id="transmissions-carousel"></div>
+                <button class="carousel-arrow right" onclick="scrollCarousel('transmissions-carousel', 300)">&#10095;</button>
+            </div>
+        </section>
+    </main>
+    <script>
+        // Função para renderizar filmes
+        function renderMoviesByGenre(movies) {
+            const moviesCarousel = document.getElementById('movies-carousel');
+            const seriesCarousel = document.getElementById('series-carousel');
+            const transmissionsCarousel = document.getElementById('transmissions-carousel');
 
-                                // Adiciona o evento de clique para todos os botões de alugar
-                                document.querySelectorAll('.rent-button').forEach(button => {
-                                    button.addEventListener('click', function() {
-                                        this.textContent = 'Assistir';
-                                        this.className = 'watch-button';
-                                    });
-                                });
-                            }
+            movies.forEach(movie => {
+                const movieCard = document.createElement('div');
+                movieCard.className = 'movie-card';
+                movieCard.innerHTML = `
+                    <img src="../Posters/${movie.Poster}" alt="Poster de ${movie.Nome}" class="movie-poster">
+                    <div class="movie-info">
+                        <h3>${movie.Nome}</h3>
+                        <p>${movie.Sinopse}</p>
+                        <p><strong>Diretor:</strong> ${movie.Diretor}</p>
+                        <p><strong>Duração:</strong> ${movie.Duracao} minutos</p>
+                        <p><strong>Ano de lançamento:</strong> ${new Date(movie.DataLancamento).getFullYear()}</p>
+                        <p><strong>Produtora:</strong> ${movie.Produtora}</p>
+                        <div class="buttons">
+                            <button class="watch-button">Assistir</button>
+                            <button class="wishlist-button" onclick="adicionarNaLista(${movie.Id})">Adicionar à Lista</button>
+                        </div>
+                    </div>
+                `;
 
-        function alugarFilme(filmeId) {
+                // Adiciona o card no carrossel correspondente ao gênero
+                switch (movie.Genero.toLowerCase()) {
+                    case 'filmes':
+                        moviesCarousel.appendChild(movieCard);
+                        break;
+                    case 's├®ries':
+                        seriesCarousel.appendChild(movieCard);
+                        break;
+                    case 'transmiss├úo ao vivo':
+                        transmissionsCarousel.appendChild(movieCard);
+                        break;
+                    default:
+                        console.error('Gênero não reconhecido:', movie.Genero);
+                }
+            });
+        }
+
+        // Dados enviados pelo servidor (ejs)
+        const movies = <%- JSON.stringify(dados) %>;
+        renderMoviesByGenre(movies);
+
+        // Função para deslizar o carrossel
+        function scrollCarousel(carouselId, distance) {
+            const carousel = document.getElementById(carouselId);
+            carousel.scrollBy({
+                left: distance,
+                behavior: 'smooth'
+            });
+        }
+        document.querySelectorAll('.wishlist-button').forEach(button => {
+            button.addEventListener('click', function() {
+                this.textContent = 'Na sua lista';
+            });
+        });
+
+        function adicionarNaLista(filmeId) {
             const userId = localStorage.getItem('userId'); // Obtém o ID do usuário do localStorage
 
             // Monta a URL com os parâmetros
@@ -72,11 +123,6 @@
                 // Tratar erro de rede ou outro erro
             });
         }
-                            // Dados dos filmes fornecidos pelo EJS
-                            const movies = [1, 2, 3, 4, 5, 6]
-                            // Chamar a função para renderizar os filmes
-                            renderMovies(movies);
-      </script>
-    </main>
-  </body>
+    </script>
+</body>
 </html>

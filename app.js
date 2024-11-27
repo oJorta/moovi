@@ -9,7 +9,7 @@ app.set("view engine", "ejs");
 app.use(express.static('public'));
 
 // Pagina inicial onde pega todos os filmes que não foram alugados e que estao disponiveis na plataforma
-/* app.get("/home", function (req, res) {
+app.get("/home", function (req, res) {
     const sql = "SELECT Filme.*, Genero.Nome AS Genero FROM Filme JOIN Genero ON Filme.FK_Genero = Genero.Id LEFT JOIN Aluguel ON Filme.Id = Aluguel.FK_Filme AND Aluguel.Vigente = true WHERE Aluguel.Id IS NULL OR Aluguel.Vigente = false";
     mySql.query(sql, [], function (err, rows) {
         if (err) {
@@ -18,7 +18,7 @@ app.use(express.static('public'));
         }
         res.render("home", { dados: rows });
     });
-}); */
+});
 
 const bcrypt = require('bcrypt');
 
@@ -27,9 +27,9 @@ app.get("/", (req, res) => {
     res.render("login");
 });
 
-app.get("/home", (req, res) => {
+/* app.get("/home", (req, res) => {
     res.render("home");
-});
+}); */
 
 app.get("/search", (req, res) => {
     res.render("search");
