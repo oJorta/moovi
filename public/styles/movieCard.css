@@ -109,3 +109,12 @@
 .wishlist-button:hover {
     background-color: #333;
 }
+
+.movies-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 10px 0;
+}

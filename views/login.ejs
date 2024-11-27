@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles/login.css" />
     <link rel="stylesheet" href="/styles/global.css" />
-    <title>Odeio Cinema</title>
+    <title>MOovi</title>
     <style>
       .alert {
         display: none;
@@ -192,14 +192,14 @@
             success: function (response) {
               if (response.success) {
                 localStorage.setItem("userId", response.userId);
-                localStorage.setItem("isAdmin", response.isAdmin);
+                localStorage.setItem("isAdmin", response.isAdmin ? "true" : "false");
                 // Redirecionar com base no status de administrador
                 if (response.isAdmin) {
-                  /* window.location.href = "/admin"; */
                   window.location.href = "/home";
                 } else {
                   window.location.href = "/home";
                 }
+                
               } else {
                 alert("Login failed");
               }

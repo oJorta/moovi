@@ -31,21 +31,21 @@ app.get("/", (req, res) => {
     res.render("home");
 }); */
 
-app.get("/search", (req, res) => {
+/* app.get("/search", (req, res) => {
     res.render("search");
-});
+}); */
 
-app.get("/alugados", (req, res) => {
+/* app.get("/alugados", (req, res) => {
     res.render("alugados");
-});
+}); */
 
-app.get("/admin", (req, res) => {
+/* app.get("/admin", (req, res) => {
     res.render("admin");
-});
+}); */
 
-app.get("/adicionar", (req, res) => {
+/* app.get("/adicionar", (req, res) => {
     res.render("adicionar");
-});
+}); */
 
 
 // Rota POST para processar o cadastro do cliente
@@ -121,7 +121,6 @@ app.post("/cadastro", async (req, res) => {
 });
 
 let idCliente = 0
-
 // Rota POST para processar o login do cliente
 app.post("/login", (req, res) => {
     const { username, password } = req.body;
@@ -161,7 +160,7 @@ app.post("/login", (req, res) => {
 });
 
 // Rota Get para ir a aba de pesquisa
-/* app.get("/search", (req, res) => {
+app.get("/search", (req, res) => {
     const sql = "SELECT Filme.*, Genero.Nome AS Genero FROM Filme JOIN Genero ON Filme.FK_Genero = Genero.Id LEFT JOIN Aluguel ON Filme.Id = Aluguel.FK_Filme AND Aluguel.Vigente = true WHERE Aluguel.Id IS NULL OR Aluguel.Vigente = false";
     mySql.query(sql, [], function (err, rows) {
         if (err) {
@@ -170,10 +169,10 @@ app.post("/login", (req, res) => {
         }
         res.render("search", { dados: rows });
     });
-}); */
+});
 
 // Rota para acessar a pagina de admin
-/* app.get("/admin", (req, res) => {
+app.get("/admin", (req, res) => {
     const sql = "SELECT * FROM Filme";
     mySql.query(sql, [], function (err, rows) {
         if (err) {
@@ -182,7 +181,7 @@ app.post("/login", (req, res) => {
         }
         res.render("admin", { dados: rows });
     });
-}); */
+});
 
 // Rota para o admin deletar filmes
 app.delete('/delete/:id', (req, res) => {
@@ -210,7 +209,7 @@ app.delete('/delete/:id', (req, res) => {
 });
 
 // Rota para fazer a pesquisa dos filmes
-/* app.get('/search2', (req, res) => {
+app.get('/search2', (req, res) => {
     const searchTerm = req.query.searchTerm || ''; // termo de pesquisa, opcional
     const minDuration = req.query.minDuration || 0; // duração mínima, opcional
     const maxDuration = req.query.maxDuration || 999; // duração máxima, opcional
@@ -248,12 +247,12 @@ app.delete('/delete/:id', (req, res) => {
         }
         res.json(results); // Envia os resultados como resposta em formato JSON
     });
-}); */
+});
 
 // rota para acessar a pagina de adicionar
-/* app.get("/adicionar", (req, res) => {
+app.get("/adicionar", (req, res) => {
     res.render("adicionar");
-}); */
+});
 
 // para adicionar imagens ao sistema
 const multer = require('multer');
@@ -294,8 +293,8 @@ app.listen(3000, () => {
 });
 
 // Rota para ver os filmes alugados
-/* app.get("/alugados", (req, res) => {
-    const userId = idCliente; // Supondo que 'userId' foi armazenado corretamente após o login
+app.get("/alugados", (req, res) => {
+    const userId = idCliente // Supondo que 'userId' foi armazenado corretamente após o login
     // Consulta para obter o ID do Cliente com base no ID do Usuário
     const clienteSql = `
         SELECT Id
@@ -333,24 +332,48 @@ app.listen(3000, () => {
             res.render("alugados", { dados: rows });
         });
     });
-}); */
+});
 
 // Rota para alugar os filmes
 app.post('/alugar', (req, res) => {
     const { clienteId, filmeId } = req.query; // Acessa os parâmetros da query string
-    // Monta a query para inserir um novo registro na tabela Aluguel
-    const aluguelSql = `
-        INSERT INTO Aluguel (DataAluguel, Vigente, FK_Cliente, FK_Filme)
-        VALUES (NOW(), true, ?, ?)
+
+    const clienteSql = `
+        SELECT Id
+        FROM Cliente
+        WHERE UsuarioId = ?
     `;
 
-    mySql.query(aluguelSql, [clienteId, filmeId], (err, result) => {
+    mySql.query(clienteSql, [clienteId], (err, clienteResult) => {
         if (err) {
-            console.error('Erro ao criar registro de aluguel:', err);
-            return res.status(500).send('Erro ao criar registro de aluguel.');
+            console.error("Erro ao buscar ID do cliente:", err);
+            return res.status(500).send("Erro ao consultar o banco de dados.");
         }
 
-        console.log('Registro de aluguel criado com sucesso.');
-        res.status(200).send('Registro de aluguel criado com sucesso.');
+        if (clienteResult.length === 0) {
+            console.error("Cliente não encontrado para o usuário com ID:", userId);
+            return res.status(404).send("Cliente não encontrado.");
+        }
+
+        const id = clienteResult[0].Id;
+        console.log('Cliente ID:', id);
+
+        const aluguelSql = `
+            INSERT INTO Aluguel (DataAluguel, Vigente, FK_Cliente, FK_Filme)
+            VALUES (NOW(), true, ?, ?)
+        `;
+
+        mySql.query(aluguelSql, [id, filmeId], (err, result) => {
+            if (err) {
+                console.error('Erro ao criar registro de aluguel:', err);
+                return res.status(500).send('Erro ao criar registro de aluguel.');
+            }
+
+            console.log('Registro de aluguel criado com sucesso.');
+            res.status(200).send('Registro de aluguel criado com sucesso.');
+        });
     });
+
+    // Monta a query para inserir um novo registro na tabela Aluguel
+    
 });

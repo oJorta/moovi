@@ -95,19 +95,20 @@
             const movieCard = document.createElement("div");
             movieCard.className = "movie-card";
             movieCard.innerHTML = `
-            <img src="../Posters/${movie.Poster}" alt="Poster do Filme" class="movie-poster">
-            <div class="movie-details">
-                <h2 class="movie-title">${movie.Nome}</h2>
-                <p class="movie-synopsis">${movie.Sinopse}</p>
-                <p class="movie-info"><strong>Duração:</strong> ${movie.Duracao} min</p>
-                <p class="movie-info"><strong>Gênero:</strong> ${movie.Genero}</p>
-                <p class="movie-info"><strong>Ano de Lançamento:</strong> ${new Date(movie.DataLancamento).getFullYear()}</p>
-                <p class="movie-info"><strong>Diretor:</strong> ${movie.Diretor}</p>
-                <p class="movie-info"><strong>Produtora:</strong> ${movie.Produtora}</p>
-                <p class="movie-info"><strong>Nota:</strong> ${movie.Nota}</p>
-                <button class="rent-button">Alugar</button>
-            </div>
-        `;
+                    <img src="../Posters/${movie.Poster}" alt="Poster de ${movie.Nome}" class="movie-poster">
+                    <div class="movie-info">
+                        <h3>${movie.Nome}</h3>
+                        <p>${movie.Sinopse}</p>
+                        <p><strong>Diretor:</strong> ${movie.Diretor}</p>
+                        <p><strong>Duração:</strong> ${movie.Duracao} minutos</p>
+                        <p><strong>Ano de lançamento:</strong> ${new Date(movie.DataLancamento).getFullYear()}</p>
+                        <p><strong>Produtora:</strong> ${movie.Produtora}</p>
+                        <div class="buttons">
+                            <button class="watch-button">Assistir</button>
+                            <button class="wishlist-button" onclick="adicionarNaLista(${movie.Id})">Adicionar à Lista</button>
+                        </div>
+                    </div>
+                `;
             moviesContainer.appendChild(movieCard);
           });
 

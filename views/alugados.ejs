@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/styles/movieCard.css" />
     <link rel="stylesheet" href="/styles/global.css" />
     <!-- Inclui o CSS global -->
-    <title>Odeio Cinema</title>
+    <title>MOovi</title>
   </head>
   <body>
     <%- include('components/header') %>
@@ -22,16 +22,17 @@
                 const movieCard = document.createElement("div");
                 movieCard.className = "movie-card";
                 movieCard.innerHTML = `
-                    <img src="../Posters/download11.jpg" alt="Poster do Filme" class="movie-poster">
-                    <div class="movie-details">
-                        <h2 class="movie-title">${"O Lobo de Wall Street"}</h2>
-                        <p class="movie-synopsis">${"Baseado na história de Jordan Belfort, desde sua ascensão como corretor de valores até a sua queda e envolvimento no crime e corrupção com o governo."}</p>
-                        <p class="movie-info"><strong>Duração:</strong> ${"180"} min</p>
-                        <p class="movie-info"><strong>Gênero:</strong> ${"Drama"}</p>
-                        <p class="movie-info"><strong>Ano de Lançamento:</strong> ${new Date('2014/02/12').getFullYear()}</p>
-                        <p class="movie-info"><strong>Diretor:</strong> ${"Scorcese"}</p>
-                        <p class="movie-info"><strong>Produtora:</strong> ${"A24"}</p>
-                        <button class="rent-button" onclick="alugarFilme(${24})">Assistir</button>
+                    <img src="../Posters/${movie.Poster}" alt="Poster de ${movie.Nome}" class="movie-poster">
+                    <div class="movie-info">
+                        <h3>${movie.Nome}</h3>
+                        <p>${movie.Sinopse}</p>
+                        <p><strong>Diretor:</strong> ${movie.Diretor}</p>
+                        <p><strong>Duração:</strong> ${movie.Duracao} minutos</p>
+                        <p><strong>Ano de lançamento:</strong> ${new Date(movie.DataLancamento).getFullYear()}</p>
+                        <p><strong>Produtora:</strong> ${movie.Produtora}</p>
+                        <div class="buttons">
+                            <button class="watch-button">Assistir</button>
+                        </div>
                     </div>
                 `;
                 moviesContainer.appendChild(movieCard);
@@ -47,7 +48,7 @@
         }
 
         // Chama a função para renderizar os filmes com os dados recebidos do servidor
-        renderMovies([1, 2, 3])
+        renderMovies(<%- JSON.stringify(dados) %>);
       </script>
     </main>
   </body>
